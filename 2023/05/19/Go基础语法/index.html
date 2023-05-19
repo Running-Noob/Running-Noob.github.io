@@ -20,28 +20,37 @@
     var CONFIG = {"hostname":"running-noob.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_body":"slideDownIn","sidebar":"slideDownIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Running Noob">
-<meta property="og:url" content="https://running-noob.github.io/index.html">
+  <meta name="description" content="Go语言基础语法Go 语言快速上手 - 基础语言01 简介1.1 什么是 Go 语言 Go 语言是谷歌出品的一门通用型计算机编程语言。有以下特性： 高性能、高并发：内嵌了对高并发的支持 语法简单、学习曲线平缓 丰富的标准库 完善的工具链：编译、代码格式化、错误检查、代码文档、包管理、代码提示 静态链接 快速编译 跨平台：Linux、WIndows、MacOS、Android、ios 垃圾回收">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go基础语法">
+<meta property="og:url" content="https://running-noob.github.io/2023/05/19/Go%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/index.html">
 <meta property="og:site_name" content="Running Noob">
+<meta property="og:description" content="Go语言基础语法Go 语言快速上手 - 基础语言01 简介1.1 什么是 Go 语言 Go 语言是谷歌出品的一门通用型计算机编程语言。有以下特性： 高性能、高并发：内嵌了对高并发的支持 语法简单、学习曲线平缓 丰富的标准库 完善的工具链：编译、代码格式化、错误检查、代码文档、包管理、代码提示 静态链接 快速编译 跨平台：Linux、WIndows、MacOS、Android、ios 垃圾回收">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://running-noob.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA/Typora%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0-git%E4%BB%93%E5%BA%93/ByteDance-BackEnd-notebook/img/Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%BD%A9%E4%BA%91%E5%B0%8F%E8%AF%91%E7%BD%91%E7%BB%9C.png">
+<meta property="og:image" content="https://running-noob.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA/Typora%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0-git%E4%BB%93%E5%BA%93/ByteDance-BackEnd-notebook/img/Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/SOCKS5.png">
+<meta property="og:image" content="https://running-noob.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA/Typora%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0-git%E4%BB%93%E5%BA%93/ByteDance-BackEnd-notebook/img/Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/SOCKS5%E5%8E%9F%E7%90%86.png">
+<meta property="article:published_time" content="2023-05-19T09:07:30.000Z">
+<meta property="article:modified_time" content="2023-05-19T09:57:06.313Z">
 <meta property="article:author" content="方卓越">
+<meta property="article:tag" content="ByteDance-End">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://running-noob.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA/Typora%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0-git%E4%BB%93%E5%BA%93/ByteDance-BackEnd-notebook/img/Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%BD%A9%E4%BA%91%E5%B0%8F%E8%AF%91%E7%BD%91%E7%BB%9C.png">
 
-<link rel="canonical" href="https://running-noob.github.io/">
+<link rel="canonical" href="https://running-noob.github.io/2023/05/19/Go%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>Running Noob</title>
+  <title>Go基础语法 | Running Noob</title>
   
 
 
@@ -180,318 +189,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://running-noob.github.io/2023/05/19/Go%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="方卓越">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Running Noob">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/05/19/Go%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/" class="post-title-link" itemprop="url">Go工程实践</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-05-19 17:11:55 / 修改时间：17:13:11" itemprop="dateCreated datePublished" datetime="2023-05-19T17:11:55+08:00">2023-05-19</time>
-            </span>
-
-          
-
-        </div>
-      </header>
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Go语言工程实践"><a href="#Go语言工程实践" class="headerlink" title="Go语言工程实践"></a>Go语言工程实践</h1><h2 id="Go语言进阶与依赖管理"><a href="#Go语言进阶与依赖管理" class="headerlink" title="Go语言进阶与依赖管理"></a>Go语言进阶与依赖管理</h2><h3 id="01-语言进阶"><a href="#01-语言进阶" class="headerlink" title="01 语言进阶"></a>01 语言进阶</h3><h4 id="并发vs并行"><a href="#并发vs并行" class="headerlink" title="并发vs并行"></a>并发vs并行</h4><ol>
-<li>并发：多线程程序在一个核的CPU上运行</li>
-<li>并行：多线程程序在多个核的CPU上运行</li>
-</ol>
-<ul>
-<li>Go 可以充分发挥多核优势，高效运行</li>
-</ul>
-<h4 id="1-1-Goroutine"><a href="#1-1-Goroutine" class="headerlink" title="1.1 Goroutine"></a>1.1 Goroutine</h4><ul>
-<li><strong>协程</strong>：用户态，轻量级线程，栈 KB 级别</li>
-<li><strong>线程</strong>：内核态，线程跑多个协程，栈 MB 级别</li>
-</ul>
-<img src="../../../../计算机/Typora笔记/笔记-git仓库/ByteDance-BackEnd-notebook/img/Go语言工程实践/协程-线程.png" style="zoom: 50%;" />
-
-<ul>
-<li>在Go语言中，为了创建协程，只需要在调用的函数前面<strong>添加 <code>go</code> 关键字</strong>即可。</li>
-</ul>
-<h4 id="1-2-CSP"><a href="#1-2-CSP" class="headerlink" title="1.2 CSP"></a>1.2 CSP</h4><ul>
-<li><p>CSP（Communicating Sequential Processes）</p>
-<p>Go 提倡通过通信共享内存而不是通过共享内存而实现通信。</p>
-<img src="../../../../计算机/Typora笔记/笔记-git仓库/ByteDance-BackEnd-notebook/img/Go语言工程实践/CSP.png" style="zoom: 67%;" /></li>
-</ul>
-<h4 id="1-3-Channel"><a href="#1-3-Channel" class="headerlink" title="1.3 Channel"></a>1.3 Channel</h4><ul>
-<li><p>通过 <code>make(chan 元素类型, [缓冲大小])</code> 创建</p>
-<ul>
-<li>无缓冲通道：<code>make(chan int)</code> </li>
-<li>有缓冲通道：<code>make(chan int, 2)</code></li>
-</ul>
-<img src="../../../../计算机/Typora笔记/笔记-git仓库/ByteDance-BackEnd-notebook/img/Go语言工程实践/channel.png" style="zoom:67%;" /></li>
-</ul>
-<h4 id="1-4-并发安全-Lock"><a href="#1-4-并发安全-Lock" class="headerlink" title="1.4 并发安全 Lock"></a>1.4 并发安全 Lock</h4><ul>
-<li>为了保证协程并发的安全进行，需要进行加锁操作。</li>
-</ul>
-<h4 id="1-5-WaitGroup"><a href="#1-5-WaitGroup" class="headerlink" title="1.5 WaitGroup"></a>1.5 WaitGroup</h4><ul>
-<li><p>用 <code>WaitGroup</code> 来优雅地实现并发进程的同步。</p>
-<p><code>WaitGroup</code> 包含有一个计数器：</p>
-<ol>
-<li>开启协程，计数器 +1；</li>
-<li>协程执行结束，计数器 -1；</li>
-<li>主协程会阻塞直到计数器为 0（即计数器为 0 表示所有子协程执行完毕）。</li>
-</ol>
-</li>
-</ul>
-<h3 id="02-依赖管理"><a href="#02-依赖管理" class="headerlink" title="02 依赖管理"></a>02 依赖管理</h3><h4 id="2-1-Go依赖管理演进"><a href="#2-1-Go依赖管理演进" class="headerlink" title="2.1 Go依赖管理演进"></a>2.1 Go依赖管理演进</h4><ul>
-<li>GOPATH -&gt; Go Vendor -&gt; Go Module<ul>
-<li>不同环境（项目）依赖的版本不同</li>
-<li>控制依赖库的版本</li>
-</ul>
-</li>
-</ul>
-<h5 id="2-1-1-GOPATH"><a href="#2-1-1-GOPATH" class="headerlink" title="2.1.1 GOPATH"></a>2.1.1 GOPATH</h5><ul>
-<li><p>环境变量 <code>$GOPATH</code> ：</p>
-<img src="../../../../计算机/Typora笔记/笔记-git仓库/ByteDance-BackEnd-notebook/img/Go语言工程实践/GOPATH.png" style="zoom: 67%;" />
-
-<p>GOPATH 问题在于无法实现 package 的多版本控制。</p>
-</li>
-</ul>
-<h5 id="2-1-2-Go-Vendor"><a href="#2-1-2-Go-Vendor" class="headerlink" title="2.1.2 Go Vendor"></a>2.1.2 Go Vendor</h5><ul>
-<li><p>项目目录下增加 vendor 文件，所有依赖包副本形式放在 <code>$ProjectRoot/vendor</code> </p>
-<p>通过每个项目引入一份依赖的副本，解决了多个项目需要同一个 package 依赖的冲突问题。</p>
-</li>
-<li><p>依赖寻址方式：vendor &#x3D;&gt; GOPATH（先 vendor，vendor 没有再 GOPATH）</p>
-</li>
-</ul>
-<h5 id="2-1-3-Go-Module"><a href="#2-1-3-Go-Module" class="headerlink" title="2.1.3 Go Module"></a>2.1.3 Go Module</h5><ul>
-<li>通过 <code>go.mod</code> 文件管理依赖包版本。通过 <code>go get/go mod</code> 指令工具管理依赖包。</li>
-</ul>
-<h4 id="2-2-Go-Module依赖管理三要素"><a href="#2-2-Go-Module依赖管理三要素" class="headerlink" title="2.2 Go Module依赖管理三要素"></a>2.2 Go Module依赖管理三要素</h4><ol>
-<li>配置文件，描述依赖：<code>go.mod</code></li>
-<li>中心仓库管理依赖库：<code>Proxy</code> </li>
-<li>本地工具：<code>go get/go mod</code></li>
-</ol>
-<h5 id="2-2-1-依赖配置-go-mod"><a href="#2-2-1-依赖配置-go-mod" class="headerlink" title="2.2.1 依赖配置-go.mod"></a>2.2.1 依赖配置-go.mod</h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">module github.com/Moonlight-Zhao/<span class="keyword">go</span>-project-example		<span class="comment">//依赖管理基本单元</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">go</span> <span class="number">1.16</span>		<span class="comment">//原生库</span></span><br><span class="line"></span><br><span class="line">require (	<span class="comment">//单元依赖</span></span><br><span class="line">	github.com/gin-contrib/sse v0<span class="number">.1</span><span class="number">.0</span> <span class="comment">// indirect</span></span><br><span class="line">	github.com/gin-gonic/gin v1<span class="number">.3</span><span class="number">.0</span> <span class="comment">// indirect</span></span><br><span class="line">	github.com/<span class="keyword">go</span>-playground/validator/v10 v10<span class="number">.10</span><span class="number">.0</span> <span class="comment">// indirect</span></span><br><span class="line">	github.com/goccy/<span class="keyword">go</span>-json v0<span class="number">.9</span><span class="number">.6</span> <span class="comment">// indirect</span></span><br><span class="line">    ...</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>单元依赖标识：<code>[Module Path][Version/Pseudo-version]</code></li>
-</ul>
-<h5 id="2-2-2-依赖配置-version"><a href="#2-2-2-依赖配置-version" class="headerlink" title="2.2.2 依赖配置-version"></a>2.2.2 依赖配置-version</h5><ul>
-<li>语义化版本：<code>$&#123;MAJOR&#125;.$&#123;MINOR&#125;.$&#123;PATCH&#125;</code> <ul>
-<li>不同的 <code>MAJOR</code> 之间的代码是隔离的</li>
-<li><code>MINOR</code> 用于新增函数等修改</li>
-<li><code>PATCH</code> 用于补丁，代码bug的修复</li>
-</ul>
-</li>
-</ul>
-<h5 id="2-2-3-依赖配置-indirect"><a href="#2-2-3-依赖配置-indirect" class="headerlink" title="2.2.3 依赖配置-indirect"></a>2.2.3 依赖配置-indirect</h5><ul>
-<li>A-&gt;B-&gt;C：<ul>
-<li>A-&gt;B 直接依赖</li>
-<li><strong>A-&gt;C 间接依赖（indirect）</strong></li>
-</ul>
-</li>
-</ul>
-<h5 id="2-2-4-依赖分发-回源"><a href="#2-2-4-依赖分发-回源" class="headerlink" title="2.2.4 依赖分发-回源"></a>2.2.4 依赖分发-回源</h5><ul>
-<li>如果将依赖包托管在第三方平台上，会有几个问题：<ol>
-<li>无法保证构建稳定性：增加&#x2F;修改&#x2F;删除软件版本</li>
-<li>无法保证依赖可用性：删除软件</li>
-<li>增加第三方压力：代码托管平台负载问题</li>
-</ol>
-</li>
-</ul>
-<h5 id="2-2-5依赖分发-Proxy"><a href="#2-2-5依赖分发-Proxy" class="headerlink" title="2.2.5依赖分发-Proxy"></a>2.2.5依赖分发-Proxy</h5><ul>
-<li>为了解决 <code>2.2.4</code> 提出的问题，要用到 Proxy。<ul>
-<li>Proxy 会<strong>缓存依赖库</strong>，实现稳定、可靠的分发。</li>
-<li>可以将 Proxy 看作是依赖源和开发平台之间的一个“中间商”，该“中间商”会<strong>存储依赖源的各种版本库</strong>，以防在依赖源发生改变后，开发平台无法使用最初依赖的版本库的问题。</li>
-</ul>
-</li>
-</ul>
-<h2 id="Go语言工程实践之测试"><a href="#Go语言工程实践之测试" class="headerlink" title="Go语言工程实践之测试"></a>Go语言工程实践之测试</h2><h3 id="03-测试"><a href="#03-测试" class="headerlink" title="03 测试"></a>03 测试</h3><ul>
-<li><p>测试是应用发布上线前的最后一步，覆盖率高的测试可以保证上线的应用的可靠性、稳定性和安全性，是避免事故的最后一道屏障。</p>
-</li>
-<li><p>测试主要分为三种：</p>
-<ul>
-<li><p>回归测试：QA人工测试</p>
-</li>
-<li><p>集成测试：对系统功能进行测试</p>
-</li>
-<li><p><strong>单元测试</strong>：开发者对单独的模块进行测试。 -&gt; 保证质量、提升效率</p>
-<img src="../../../../计算机/Typora笔记/笔记-git仓库/ByteDance-BackEnd-notebook/img/Go语言工程实践/单元测试.png" style="zoom: 50%;" /></li>
-</ul>
-</li>
-</ul>
-<h4 id="3-1-单元测试"><a href="#3-1-单元测试" class="headerlink" title="3.1 单元测试"></a>3.1 单元测试</h4><h5 id="3-1-1-规则"><a href="#3-1-1-规则" class="headerlink" title="3.1.1 规则"></a>3.1.1 规则</h5><ul>
-<li><p>所有测试文件以 <code>_test.go</code> 结尾</p>
-</li>
-<li><p>测试函数命名规范为：<code>func TestXxx(t *testing.T) &#123;&#125;</code> </p>
-</li>
-<li><p>初始化逻辑放在 <code>TestMain</code> 中：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestMain</span><span class="params">(m *testing.M)</span></span> &#123;</span><br><span class="line">    <span class="comment">//测试前：数据装载、配置初始化等前置工作</span></span><br><span class="line">    </span><br><span class="line">    code := m.Run()</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//测试后：释放资源等收尾工作</span></span><br><span class="line">    </span><br><span class="line">    os.Exit(code)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h5 id="3-1-2-例子"><a href="#3-1-2-例子" class="headerlink" title="3.1.2 例子"></a>3.1.2 例子</h5><ul>
-<li><p>接下来以一个返回字符串的函数的测试为例，展示测试函数的使用：</p>
-<ul>
-<li><p>被测试函数：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">HelloTom</span><span class="params">()</span></span> <span class="type">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;Jerry&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个函数的本意是返回 “Tom” 字符串，但是却返回了 “Jerry”。</p>
-</li>
-<li><p>测试函数：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestHelloTom</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">    output := HelloTom()</span><br><span class="line">    expectOutput := <span class="string">&quot;Tom&quot;</span></span><br><span class="line">    <span class="keyword">if</span> output != expectOutput &#123;</span><br><span class="line">        t.Errorf(<span class="string">&quot;Expected %s do not match actual %s&quot;</span>, expectOutput, output)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在测试函数中检测出了问题。</p>
-</li>
-</ul>
-</li>
-</ul>
-<h5 id="3-1-3-运行"><a href="#3-1-3-运行" class="headerlink" title="3.1.3 运行"></a>3.1.3 运行</h5><ul>
-<li><p>在 VScode 中，可以在 <code>Xxx_test.go</code> 文件中，通过点击测试函数左侧的执行符号，方便地进行测试，如下图是测试结果：</p>
-<p><img src="/../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA/Typora%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0-git%E4%BB%93%E5%BA%93/ByteDance-BackEnd-notebook/img/Go%E8%AF%AD%E8%A8%80%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/%E6%B5%8B%E8%AF%95HelloTom.png"></p>
-<p>可以看到，检测出了返回字符串不匹配的问题。</p>
-</li>
-</ul>
-<h5 id="★3-1-4-覆盖率"><a href="#★3-1-4-覆盖率" class="headerlink" title="★3.1.4 覆盖率"></a>★3.1.4 覆盖率</h5><ul>
-<li><p>代码覆盖率，是一种通过计算测试过程中 <code>被执行的源代码</code> 占 <code>全部源代码</code> 的比例，进而间接度量软件质量的方法。它在保证测试质量的时候潜在保证实际产品的质量，可以基于此在程序中寻找没有被测试用例测试过的地方，进一步创建新的测试用例来增加覆盖率。</p>
-</li>
-<li><p>在实际项目中，一般覆盖率在 50%~60% 之间，较高覆盖率能达到 80%+。</p>
-<p>可以通过下面的方法尽可能地提高覆盖率：</p>
-<ol>
-<li>测试分支相互独立，全面覆盖。</li>
-<li>测试单元粒度足够小，函数单一职责。</li>
-</ol>
-</li>
-</ul>
-<h4 id="3-2-单元测试-依赖"><a href="#3-2-单元测试-依赖" class="headerlink" title="3.2 单元测试-依赖"></a>3.2 单元测试-依赖</h4><ul>
-<li>单元测试要求<strong>幂等&amp;稳定</strong>：<ul>
-<li><strong>幂等</strong>：重复运行测试一个 case 时，其结果应保持相同。</li>
-<li><strong>稳定</strong>：单元测试之间是相互隔离的。</li>
-</ul>
-</li>
-</ul>
-<h4 id="3-3-单元测试-Mock"><a href="#3-3-单元测试-Mock" class="headerlink" title="3.3 单元测试-Mock"></a>3.3 单元测试-Mock</h4><ul>
-<li><p>Mock 意为 “<strong>模仿的；模拟的</strong>”，是指在测试过程中，对于某些不容易构造或者不容易获取的对象，用一个虚拟的 Mock 对象来创建以便测试的测试方法。</p>
-<p>例如：在单元测试过程中，数据可能需要经过多方获取，且流程复杂：</p>
-<p><img src="/../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA/Typora%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0-git%E4%BB%93%E5%BA%93/ByteDance-BackEnd-notebook/img/Go%E8%AF%AD%E8%A8%80%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/mock.png"></p>
-<p><code>Class A </code>要从 <code>Class B</code> 和<code>Class C</code>中获取数据，而 <code>Class C </code>中该数据又来源于 <code>Class D </code>和 <code>Class E</code>，这时可以利用 Mock 去构造虚拟的<code>Class B</code> 和<code>Class C</code>对象用于<code>Class A </code>的测试，因为我们只是想测试class A的行为是否符合预期，并不需要去测试依赖对象。</p>
-</li>
-<li><p>常用的 Mock 测试包：<a target="_blank" rel="noopener" href="https://github.com/bouk/monkey">bouk&#x2F;monkey: Monkey patching in Go (github.com)</a> </p>
-</li>
-<li><p>快速 Mock 函数：</p>
-<ul>
-<li>为一个函数打桩：用打桩函数替代要测试的目标函数，既能对函数的功能进行测试，又不需要对目标函数中所需的文件有强依赖。</li>
-<li>为一个方法打桩</li>
-</ul>
-</li>
-</ul>
-<h4 id="3-4-基准测试"><a href="#3-4-基准测试" class="headerlink" title="3.4 基准测试"></a>3.4 基准测试</h4><ul>
-<li>用于优化代码，对当前代码进行分析。-&gt; 内置的测试框架提供了基准测试的能力。</li>
-</ul>
-<h3 id="04-项目实践"><a href="#04-项目实践" class="headerlink" title="04 项目实践"></a>04 项目实践</h3><ul>
-<li><p>以<strong>掘金社区话题页面</strong>为例，讲述项目开发的流程：</p>
-<p><img src="/../../../../%E8%AE%A1%E7%AE%97%E6%9C%BA/Typora%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0-git%E4%BB%93%E5%BA%93/ByteDance-BackEnd-notebook/img/Go%E8%AF%AD%E8%A8%80%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/%E7%A4%BE%E5%8C%BA%E8%AF%9D%E9%A2%98%E9%A1%B5%E9%9D%A2.png"></p>
-</li>
-</ul>
-<h4 id="4-1-需求描述"><a href="#4-1-需求描述" class="headerlink" title="4.1 需求描述"></a>4.1 需求描述</h4><ol>
-<li>展示话题（标题，文字描述）和回帖列表；</li>
-<li>暂不考虑前端页面实现，仅仅实现一个本地 web 服务；</li>
-<li>话题和回帖数据用文件存储。</li>
-</ol>
-<h4 id="4-2-需求用例"><a href="#4-2-需求用例" class="headerlink" title="4.2 需求用例"></a>4.2 需求用例</h4><ul>
-<li><p>用 <code>UML</code> 来形象直观地表示需求。在这个项目中，<code>UML</code> 图展示如下：</p>
-<img src="../../../../计算机/Typora笔记/笔记-git仓库/ByteDance-BackEnd-notebook/img/Go语言工程实践/UML.png" style="zoom: 50%;" /></li>
-</ul>
-<h4 id="4-3-ER图"><a href="#4-3-ER图" class="headerlink" title="4.3 ER图"></a>4.3 ER图</h4><ul>
-<li><p>ER：Entity Relationship，实体关系。</p>
-<p>ER 图表征了现实世界的概念模型及它们之间的关系。在这个项目中，ER 图展示如下：</p>
-<img src="../../../../计算机/Typora笔记/笔记-git仓库/ByteDance-BackEnd-notebook/img/Go语言工程实践/ER图.png" style="zoom: 50%;" />
-
-<p>Topic 和 Post 是一对多的关系。</p>
-</li>
-</ul>
-<h4 id="4-4-分层结构"><a href="#4-4-分层结构" class="headerlink" title="4.4 分层结构"></a>4.4 分层结构</h4><ul>
-<li><p>主要采用分层结构来进行项目代码的设计，这样做逻辑清晰，职责明确，通过各层之间暴露的接口来进行合作，而不需要知道其他层的代码实现细节，有利于提高代码编写的效率。</p>
-</li>
-<li><p>分层结构主要分为以下几层：</p>
-<img src="../../../../计算机/Typora笔记/笔记-git仓库/ByteDance-BackEnd-notebook/img/Go语言工程实践/分层结构.png" style="zoom:50%;" />
-
-<ul>
-<li><strong>数据层</strong>：数据 Model，外部数据的增删改查；</li>
-<li><strong>逻辑层</strong>：业务 Entity，处理核心业务逻辑输出；</li>
-<li><strong>视图层</strong>：视图 view，处理和外部的交互逻辑。</li>
-</ul>
-</li>
-</ul>
-<h4 id="4-5-组件工具"><a href="#4-5-组件工具" class="headerlink" title="4.5 组件工具"></a>4.5 组件工具</h4><ul>
-<li><p>我们在搭建社区话题页面时，并不需要从零开始一步步搭建，而可以站在巨人的肩膀上，在他人开源的框架的基础之上进行业务开发。</p>
-<p>这是一个开源的 Gin 高性能 go web 框架：<a target="_blank" rel="noopener" href="https://github.com/gin-gonic/gin#installation">gin-gonic&#x2F;gin: Gin is a HTTP web framework written in Go (Golang). </a></p>
-</li>
-</ul>
-<h4 id="4-6-项目搭建流程"><a href="#4-6-项目搭建流程" class="headerlink" title="4.6 项目搭建流程"></a>4.6 项目搭建流程</h4><ol>
-<li><p>在项目构建之初，我们用 <code>go mod init</code> 进行初始化，然后通过 <code>go get gopkg.in/gin-gonic/gin.v1@v1.3.0</code> 来远程拉取代码包及其依赖包，并自动完成编译和安装。</p>
-</li>
-<li><p>根据之前的需求分析对<strong>数据层 Repository</strong> 的数据库部分进行代码编写，应该实现两个基本的查询操作：</p>
-<ul>
-<li>根据话题 Id 查询话题：<code>QueryTopicById</code> </li>
-<li>根据话题 Id 查询所有帖子数据：<code>QueryPostByParentId</code></li>
-</ul>
-</li>
-<li><p>在数据库中查询到数据后，将其传输到<strong>逻辑层 Service</strong> 进行处理：参数校验 <code>checkParam</code>  -&gt; 准备数据  <code>prepareInfo</code> -&gt; 组装实体 <code>packPageInfo</code> ；</p>
-</li>
-<li><p>然后在<strong>视图层 Controller</strong> 将从逻辑层得到的数据显示为话题页面。</p>
-</li>
-<li><p>最后，利用 <code>gin</code> 这个框架来完成整个项目的实现。包括：</p>
-<ol>
-<li>初始化数据索引；</li>
-<li>初始化引擎配置；</li>
-<li>构建路由；</li>
-<li>启动服务。</li>
-</ol>
-</li>
-</ol>
-<ul>
-<li>项目代码可见 <a target="_blank" rel="noopener" href="https://github.com/Moonlight-Zhao/go-project-example">Moonlight-Zhao&#x2F;go-project-example (github.com)</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -507,10 +208,9 @@
       <meta itemprop="name" content="Running Noob">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/05/19/Go%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" class="post-title-link" itemprop="url">Go基础语法</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          Go基础语法
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -534,7 +234,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Go语言基础语法"><a href="#Go语言基础语法" class="headerlink" title="Go语言基础语法"></a>Go语言基础语法</h1><h2 id="Go-语言快速上手-基础语言"><a href="#Go-语言快速上手-基础语言" class="headerlink" title="Go 语言快速上手 - 基础语言"></a>Go 语言快速上手 - 基础语言</h2><h3 id="01-简介"><a href="#01-简介" class="headerlink" title="01 简介"></a>01 简介</h3><h4 id="1-1-什么是-Go-语言"><a href="#1-1-什么是-Go-语言" class="headerlink" title="1.1 什么是 Go 语言"></a>1.1 什么是 Go 语言</h4><ul>
+        <h1 id="Go语言基础语法"><a href="#Go语言基础语法" class="headerlink" title="Go语言基础语法"></a>Go语言基础语法</h1><h2 id="Go-语言快速上手-基础语言"><a href="#Go-语言快速上手-基础语言" class="headerlink" title="Go 语言快速上手 - 基础语言"></a>Go 语言快速上手 - 基础语言</h2><h3 id="01-简介"><a href="#01-简介" class="headerlink" title="01 简介"></a>01 简介</h3><h4 id="1-1-什么是-Go-语言"><a href="#1-1-什么是-Go-语言" class="headerlink" title="1.1 什么是 Go 语言"></a>1.1 什么是 Go 语言</h4><ul>
 <li>Go 语言是谷歌出品的一门通用型计算机编程语言。有以下特性：<ol>
 <li>高性能、高并发：内嵌了对高并发的支持</li>
 <li>语法简单、学习曲线平缓</li>
@@ -748,21 +448,50 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">connect</span><span class="params">(reader *bufio.Reader, conn net.Conn)</span></span> (err <span class="type">error</span>) &#123;</span><br><span class="line">    </span><br><span class="line">	...	<span class="comment">//请求阶段代码</span></span><br><span class="line">    </span><br><span class="line">	ctx, cancel := context.WithCancel(context.Background())</span><br><span class="line">	<span class="keyword">defer</span> cancel()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		_, _ = io.Copy(dest, reader)</span><br><span class="line">		cancel()</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		_, _ = io.Copy(conn, dest)</span><br><span class="line">		cancel()</span><br><span class="line">	&#125;()</span><br><span class="line"></span><br><span class="line">	&lt;-ctx.Done()</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
 
-      
     </div>
 
     
     
     
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>方卓越
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://running-noob.github.io/2023/05/19/Go%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" title="Go基础语法">https://running-noob.github.io/2023/05/19/Go基础语法/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+          <div class="post-tags">
+              <a href="/tags/ByteDance-End/" <i class="fa fa-tag"></i> ByteDance-End</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2023/05/19/Go%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/" rel="next" title="Go工程实践">
+      Go工程实践 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
@@ -815,6 +544,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">Go语言基础语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Go-%E8%AF%AD%E8%A8%80%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E5%9F%BA%E7%A1%80%E8%AF%AD%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">Go 语言快速上手 - 基础语言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">01 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF-Go-%E8%AF%AD%E8%A8%80"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">1.1 什么是 Go 语言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E5%93%AA%E4%BA%9B%E5%85%AC%E5%8F%B8%E5%9C%A8%E4%BD%BF%E7%94%A8-GO"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">1.2 哪些公司在使用 GO</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-%E5%AD%97%E8%8A%82%E5%85%A8%E9%9D%A2%E6%8B%A5%E6%8A%B1-Go-%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">1.3 字节全面拥抱 Go 的原因</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-%E5%85%A5%E9%97%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">02 入门</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">2.1 开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Golang"><span class="nav-number">1.1.2.1.1.</span> <span class="nav-text">安装 Golang</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%9B%86%E6%88%90%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.2.1.2.</span> <span class="nav-text">配置集成开发环境</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">2.2 基础语法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.2.2.1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%B8%E9%87%8F"><span class="nav-number">1.1.2.2.2.</span> <span class="nav-text">常量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#if-else"><span class="nav-number">1.1.2.2.3.</span> <span class="nav-text">if-else</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.1.2.2.4.</span> <span class="nav-text">循环</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#switch"><span class="nav-number">1.1.2.2.5.</span> <span class="nav-text">switch</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">1.1.2.2.6.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E2%98%85%E5%88%87%E7%89%87"><span class="nav-number">1.1.2.2.7.</span> <span class="nav-text">★切片</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E2%98%85map"><span class="nav-number">1.1.2.2.8.</span> <span class="nav-text">★map</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#range"><span class="nav-number">1.1.2.2.9.</span> <span class="nav-text">range</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.2.2.10.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8C%87%E9%92%88"><span class="nav-number">1.1.2.2.11.</span> <span class="nav-text">指针</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">1.1.2.2.12.</span> <span class="nav-text">结构体</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.2.2.13.</span> <span class="nav-text">结构体方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="nav-number">1.1.2.2.14.</span> <span class="nav-text">错误处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C"><span class="nav-number">1.1.2.2.15.</span> <span class="nav-text">字符串操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-number">1.1.2.2.16.</span> <span class="nav-text">字符串格式化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E2%98%85JSON%E5%A4%84%E7%90%86"><span class="nav-number">1.1.2.2.17.</span> <span class="nav-text">★JSON处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%A4%84%E7%90%86"><span class="nav-number">1.1.2.2.18.</span> <span class="nav-text">时间处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E8%A7%A3%E6%9E%90"><span class="nav-number">1.1.2.2.19.</span> <span class="nav-text">数字解析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E4%BF%A1%E6%81%AF"><span class="nav-number">1.1.2.2.20.</span> <span class="nav-text">进程信息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#03-%E5%AE%9E%E6%88%98"><span class="nav-number">1.1.3.</span> <span class="nav-text">03 实战</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E7%8C%9C%E8%B0%9C%E6%B8%B8%E6%88%8F-%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">3.1 猜谜游戏 - 生成随机数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E5%9C%A8%E7%BA%BF%E8%AF%8D%E5%85%B8"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">3.2 在线词典</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-SOCKS5-%E4%BB%A3%E7%90%86"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">3.3 SOCKS5 代理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.3.3.1.</span> <span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.1.3.3.2.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
