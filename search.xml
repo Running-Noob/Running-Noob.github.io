@@ -255,9 +255,9 @@
 <li>项目代码可见 <a href="https://github.com/Moonlight-Zhao/go-project-example">Moonlight-Zhao&#x2F;go-project-example (github.com)</a></li>
 </ul>
 ]]></content>
-      <tags>
-        <tag>ByteDance</tag>
-      </tags>
+      <categories>
+        <category>ByteDance</category>
+      </categories>
   </entry>
   <entry>
     <title>Go基础语法</title>
@@ -476,8 +476,8 @@
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">connect</span><span class="params">(reader *bufio.Reader, conn net.Conn)</span></span> (err <span class="type">error</span>) &#123;</span><br><span class="line">    </span><br><span class="line">	...	<span class="comment">//请求阶段代码</span></span><br><span class="line">    </span><br><span class="line">	ctx, cancel := context.WithCancel(context.Background())</span><br><span class="line">	<span class="keyword">defer</span> cancel()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		_, _ = io.Copy(dest, reader)</span><br><span class="line">		cancel()</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		_, _ = io.Copy(conn, dest)</span><br><span class="line">		cancel()</span><br><span class="line">	&#125;()</span><br><span class="line"></span><br><span class="line">	&lt;-ctx.Done()</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
 ]]></content>
-      <tags>
-        <tag>ByteDance-End</tag>
-      </tags>
+      <categories>
+        <category>ByteDance-End</category>
+      </categories>
   </entry>
 </search>
