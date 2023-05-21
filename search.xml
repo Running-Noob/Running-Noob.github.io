@@ -1,258 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Go语言工程实践</title>
-    <url>/2023/05/19/Go%E8%AF%AD%E8%A8%80%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/</url>
-    <content><![CDATA[<h1 id="Go语言工程实践"><a href="#Go语言工程实践" class="headerlink" title="Go语言工程实践"></a>Go语言工程实践</h1><h2 id="Go语言进阶与依赖管理"><a href="#Go语言进阶与依赖管理" class="headerlink" title="Go语言进阶与依赖管理"></a>Go语言进阶与依赖管理</h2><h3 id="01-语言进阶"><a href="#01-语言进阶" class="headerlink" title="01 语言进阶"></a>01 语言进阶</h3><h4 id="并发vs并行"><a href="#并发vs并行" class="headerlink" title="并发vs并行"></a>并发vs并行</h4><ol>
-<li>并发：多线程程序在一个核的CPU上运行</li>
-<li>并行：多线程程序在多个核的CPU上运行</li>
+    <title>博客指南</title>
+    <url>/2023/05/21/%E5%8D%9A%E5%AE%A2%E6%8C%87%E5%8D%97/</url>
+    <content><![CDATA[<h1 id="博客指南"><a href="#博客指南" class="headerlink" title="博客指南"></a>博客指南</h1><ul>
+<li><p>Hello，这里是 Running Noob 的 blog，welcome！</p>
+</li>
+<li><p>在这里，主要记录了博主在学习成长过程中的各种笔记，包括阅读论文的总结和心得、本人研究方向的实验平台 <code>WorkflowSim</code> 的原理与使用方法、软件开发过程中的各种相关知识等等。</p>
+<p>总的来说，这里是包含博主各种笔记的藏经阁 ~~~ </p>
+</li>
+<li><p>同时，这里也记录并将记录我的各种项目经历与实习经历，可以说是个人成长的一个记录点吧，也希望能给未来想要进入互联网行业的同学一些参考价值 ~ 。</p>
+</li>
+<li><p>未来，博主也有可能在这里分享自己在工作过程中的心得与感悟，于己于人，我想，都是有益的吧。</p>
+</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>走进消息队列</title>
+    <url>/2023/05/20/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</url>
+    <content><![CDATA[<h1 id="走进消息队列"><a href="#走进消息队列" class="headerlink" title="走进消息队列"></a>走进消息队列</h1><h2 id="01-消息队列前世今生"><a href="#01-消息队列前世今生" class="headerlink" title="01 消息队列前世今生"></a>01 消息队列前世今生</h2><h3 id="1-1-什么是消息队列"><a href="#1-1-什么是消息队列" class="headerlink" title="1.1 什么是消息队列"></a>1.1 什么是消息队列</h3><ul>
+<li><p>消息队列 (MQ，Message Queue)，指<strong>保存消息的一个容器，本质是个队列</strong>。但这个队列呢，<strong>需要支持高吞吐，高并发，并且高可用</strong>。</p>
+<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/MQ.png"></p>
+</li>
+</ul>
+<h3 id="1-2-消息队列发展历程"><a href="#1-2-消息队列发展历程" class="headerlink" title="1.2 消息队列发展历程"></a>1.2 消息队列发展历程</h3><ul>
+<li>消息队列从上个世纪九十年代就出现了。<ul>
+<li>1993年，IBM 开发了自己的商业消息队列 <code>IBM MQ/WebSphere</code></li>
+<li>1997年，微软发布了 <code>MSMQ</code></li>
+</ul>
+</li>
+<li>然后在二十世纪初，消息队列有了更进一步的发展。<ul>
+<li>2001年，Sun 开发了针对 Java 语言的 <code>JMS</code>，本质上是一套 Java API</li>
+<li>2004年，发布了 MQ 规范 <code>AMQP</code>，同年 <code>RabbitMQ</code> 面世</li>
+<li><strong>2010年，开源了 <code>Kafka</code></strong></li>
+<li><strong>2011年，阿里中间件团队自研了 <code>RocketMQ</code></strong></li>
+<li>2012年，Yahoo 开发了 <code>Pulsar</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="1-3-业界消息队列对比"><a href="#1-3-业界消息队列对比" class="headerlink" title="1.3 业界消息队列对比"></a>1.3 业界消息队列对比</h3><ul>
+<li><code>Kafka</code>：分布式的、分区的、多副本的日志提交服务，在<strong>高吞吐场景</strong>下发挥较为出色</li>
+<li><code>RocketMQ</code>：低延迟、强一致、高性能、高可靠、万亿级容量和灵活的可扩展性，在一些<strong>实时场景</strong>中运用较广</li>
+<li><code>Pulsar</code>：是下一代云原生分布式消息流平台，集消息、存储、轻量化函数式计算为一体、采用存算分离的架构设计</li>
+<li><code>BMQ</code>：和 <code>Pulsar</code> 架构类似，存算分离，初期定位是承接高吞吐的离线业务场景，逐步替换掉对应的 <code>Kafka</code> 集群</li>
+</ul>
+<h2 id="02-消息队列Kafka"><a href="#02-消息队列Kafka" class="headerlink" title="02 消息队列Kafka"></a>02 消息队列Kafka</h2><ul>
+<li>主要用于离线的消息处理，如日志信息、Metrics数据、用户行为。</li>
+</ul>
+<h3 id="2-1-如何使用Kafka"><a href="#2-1-如何使用Kafka" class="headerlink" title="2.1 如何使用Kafka"></a>2.1 如何使用Kafka</h3><ol>
+<li>创建集群</li>
+<li>新增 <code>Topic</code></li>
+<li>编写生产者逻辑</li>
+<li>编写消费者逻辑</li>
 </ol>
+<h3 id="2-2-基本概念"><a href="#2-2-基本概念" class="headerlink" title="2.2 基本概念"></a>2.2 基本概念</h3><ul>
+<li><p><code>Kafka</code>的工作流程如下：</p>
+<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Kafka%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.png"></p>
+<p>其中：</p>
 <ul>
-<li>Go 可以充分发挥多核优势，高效运行</li>
+<li><code>Topic</code>：逻辑队列，不同 <code>Topic</code> 可以建立不同的 <code>Topic</code> 对象</li>
+<li><code>Partition</code>：<code>Topic</code> 的分区，<strong>不同的分区的消息可以并发处理</strong></li>
+<li><code>Cluster</code>：物理集群，每个集群中可以建立多个不同的 <code>Topic</code></li>
+<li><code>Producer</code>：<strong>生产者</strong>，负责将业务消息发送到 <code>Topic</code> 中</li>
+<li><code>Consumer</code>：<strong>消费者</strong>，负责消费 <code>Topic</code> 中的消息</li>
+<li><code>ConsumerGroup</code>：消费者组，不同组的 <code>Consumer</code> 消费进度互不千涉</li>
 </ul>
-<h4 id="1-1-Goroutine"><a href="#1-1-Goroutine" class="headerlink" title="1.1 Goroutine"></a>1.1 Goroutine</h4><ul>
-<li><strong>协程</strong>：用户态，轻量级线程，栈 KB 级别</li>
-<li><strong>线程</strong>：内核态，线程跑多个协程，栈 MB 级别</li>
-</ul>
-<img src="../images/Go语言工程实践/协程-线程.png" style="zoom: 50%;" />
-
+</li>
+<li><p>对于 <code>Topic</code> 内部：</p>
+<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Kafka%20Topic%E5%86%85%E9%83%A8.png"></p>
 <ul>
-<li>在Go语言中，为了创建协程，只需要在调用的函数前面<strong>添加 <code>go</code> 关键字</strong>即可。</li>
+<li><code>Offset</code>：消息在 <code>Partition</code> 内的相对位置信息，可以理解为唯一 ID，在 <code>Partition</code> 内部严格递增。</li>
 </ul>
-<h4 id="1-2-CSP"><a href="#1-2-CSP" class="headerlink" title="1.2 CSP"></a>1.2 CSP</h4><ul>
-<li><p>CSP（Communicating Sequential Processes）</p>
-<p>Go 提倡通过通信共享内存而不是通过共享内存而实现通信。</p>
-<img src="../images/Go语言工程实践/CSP.png" style="zoom: 67%;" /></li>
-</ul>
-<h4 id="1-3-Channel"><a href="#1-3-Channel" class="headerlink" title="1.3 Channel"></a>1.3 Channel</h4><ul>
-<li><p>通过 <code>make(chan 元素类型, [缓冲大小])</code> 创建</p>
+</li>
+<li><p>对于 <code>Partition</code> 内部：</p>
+<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Topic%20Partition%E5%86%85%E9%83%A8.png"></p>
 <ul>
-<li>无缓冲通道：<code>make(chan int)</code> </li>
-<li>有缓冲通道：<code>make(chan int, 2)</code></li>
+<li>每个 <code>Partition</code> 都有多个 <code>Replica</code>，<code>Leader Replica</code> 将会从 <code>ISR</code> 中选出。<ul>
+<li>如果 <code>Leader Replica</code> 所在的机器发生宕机，那就可以从 <code>ISR</code> 中重新挑选一个 <code>Replica</code> 成为 <code>Leader Replica</code> ，以保证业务的正常运行。</li>
 </ul>
-<img src="../images/Go语言工程实践/channel.png" style="zoom:67%;" /></li>
+</li>
 </ul>
-<h4 id="1-4-并发安全-Lock"><a href="#1-4-并发安全-Lock" class="headerlink" title="1.4 并发安全 Lock"></a>1.4 并发安全 Lock</h4><ul>
-<li>为了保证协程并发的安全进行，需要进行加锁操作。</li>
+</li>
 </ul>
-<h4 id="1-5-WaitGroup"><a href="#1-5-WaitGroup" class="headerlink" title="1.5 WaitGroup"></a>1.5 WaitGroup</h4><ul>
-<li><p>用 <code>WaitGroup</code> 来优雅地实现并发进程的同步。</p>
-<p><code>WaitGroup</code> 包含有一个计数器：</p>
-<ol>
-<li>开启协程，计数器 +1；</li>
-<li>协程执行结束，计数器 -1；</li>
-<li>主协程会阻塞直到计数器为 0（即计数器为 0 表示所有子协程执行完毕）。</li>
+<h3 id="2-3-Kafka架构"><a href="#2-3-Kafka架构" class="headerlink" title="2.3 Kafka架构"></a>2.3 Kafka架构</h3><ul>
+<li><p>2.2 节已经说过，每个 <code>Partition</code> 都有多个 <code>Replica</code>，而且这些 <code>Replica</code> 并<strong>不是保存在同一台机器上</strong>的。如下图所示，<code>Broker Controller</code> 会通过计算来确定将 <code>Topic</code> 的 <code>Partition</code> 及其副本都保存在哪些 <code>Broker</code> 上。</p>
+<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Kafka%E6%9E%B6%E6%9E%84.png"></p>
+<p>然后在这些 <code>Broker</code> 的上层，有 <code>ZooKeeper</code> 来负责存储集群元信息，包括分区分配信息等。</p>
+<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Kafka%E6%9E%B6%E6%9E%842.png"></p>
+</li>
+</ul>
+<h3 id="2-4-Kafka提高吞吐和稳定性的措施"><a href="#2-4-Kafka提高吞吐和稳定性的措施" class="headerlink" title="2.4 Kafka提高吞吐和稳定性的措施"></a>2.4 Kafka提高吞吐和稳定性的措施</h3><ul>
+<li>从 <code>Producer</code> 方面：批量发送、数据压缩</li>
+<li>从 <code>Broker</code> 方面：顺序写，消息索引，零拷贝</li>
+<li>从 <code>Consumer</code> 方面：Rebalance</li>
+</ul>
+<h3 id="2-5-Kafka的不足之处"><a href="#2-5-Kafka的不足之处" class="headerlink" title="2.5 Kafka的不足之处"></a>2.5 Kafka的不足之处</h3><ol>
+<li>运维成本高；</li>
+<li>对于负载不均衡的场景，解决方案复杂；</li>
+<li>没有自己的缓存，完全依赖 Page Cache；</li>
+<li><code>Controller</code> 和 <code>Coordinator</code> 和 <code>Broker</code> 在同一进程中，大量 <code>lO</code> 会造成其性能下降。</li>
 </ol>
+<h2 id="03-消息队列BMQ"><a href="#03-消息队列BMQ" class="headerlink" title="03 消息队列BMQ"></a>03 消息队列BMQ</h2><ul>
+<li><code>BMQ</code> 兼容了 <code>Kafka</code> 协议，存算分离，云原生消息队列。</li>
+</ul>
+<h3 id="3-1-BMQ架构"><a href="#3-1-BMQ架构" class="headerlink" title="3.1 BMQ架构"></a>3.1 BMQ架构</h3><ul>
+<li><p>由于 <code>BMQ</code> 兼容了 <code>Kafka</code> 协议，所以它的架构与 <code>Kafka</code> 类似：</p>
+<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/BMQ%E6%9E%B6%E6%9E%84.png"></p>
 </li>
 </ul>
-<h3 id="02-依赖管理"><a href="#02-依赖管理" class="headerlink" title="02 依赖管理"></a>02 依赖管理</h3><h4 id="2-1-Go依赖管理演进"><a href="#2-1-Go依赖管理演进" class="headerlink" title="2.1 Go依赖管理演进"></a>2.1 Go依赖管理演进</h4><ul>
-<li>GOPATH -&gt; Go Vendor -&gt; Go Module<ul>
-<li>不同环境（项目）依赖的版本不同</li>
-<li>控制依赖库的版本</li>
+<h3 id="3-2-BMQ和Kafka对比"><a href="#3-2-BMQ和Kafka对比" class="headerlink" title="3.2 BMQ和Kafka对比"></a>3.2 BMQ和Kafka对比</h3><ul>
+<li>运维对比：</li>
 </ul>
-</li>
-</ul>
-<h5 id="2-1-1-GOPATH"><a href="#2-1-1-GOPATH" class="headerlink" title="2.1.1 GOPATH"></a>2.1.1 GOPATH</h5><ul>
-<li><p>环境变量 <code>$GOPATH</code> ：</p>
-<img src="../images/Go语言工程实践/GOPATH.png" style="zoom: 67%;" />
-
-<p>GOPATH 问题在于无法实现 package 的多版本控制。</p>
-</li>
-</ul>
-<h5 id="2-1-2-Go-Vendor"><a href="#2-1-2-Go-Vendor" class="headerlink" title="2.1.2 Go Vendor"></a>2.1.2 Go Vendor</h5><ul>
-<li><p>项目目录下增加 vendor 文件，所有依赖包副本形式放在 <code>$ProjectRoot/vendor</code> </p>
-<p>通过每个项目引入一份依赖的副本，解决了多个项目需要同一个 package 依赖的冲突问题。</p>
-</li>
-<li><p>依赖寻址方式：vendor &#x3D;&gt; GOPATH（先 vendor，vendor 没有再 GOPATH）</p>
-</li>
-</ul>
-<h5 id="2-1-3-Go-Module"><a href="#2-1-3-Go-Module" class="headerlink" title="2.1.3 Go Module"></a>2.1.3 Go Module</h5><ul>
-<li>通过 <code>go.mod</code> 文件管理依赖包版本。通过 <code>go get/go mod</code> 指令工具管理依赖包。</li>
-</ul>
-<h4 id="2-2-Go-Module依赖管理三要素"><a href="#2-2-Go-Module依赖管理三要素" class="headerlink" title="2.2 Go Module依赖管理三要素"></a>2.2 Go Module依赖管理三要素</h4><ol>
-<li>配置文件，描述依赖：<code>go.mod</code></li>
-<li>中心仓库管理依赖库：<code>Proxy</code> </li>
-<li>本地工具：<code>go get/go mod</code></li>
-</ol>
-<h5 id="2-2-1-依赖配置-go-mod"><a href="#2-2-1-依赖配置-go-mod" class="headerlink" title="2.2.1 依赖配置-go.mod"></a>2.2.1 依赖配置-go.mod</h5><figure class="highlight go"><table><tr><td class="code"><pre><span class="line">module github.com/Moonlight-Zhao/<span class="keyword">go</span>-project-example		<span class="comment">//依赖管理基本单元</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">go</span> <span class="number">1.16</span>		<span class="comment">//原生库</span></span><br><span class="line"></span><br><span class="line">require (	<span class="comment">//单元依赖</span></span><br><span class="line">	github.com/gin-contrib/sse v0<span class="number">.1</span><span class="number">.0</span> <span class="comment">// indirect</span></span><br><span class="line">	github.com/gin-gonic/gin v1<span class="number">.3</span><span class="number">.0</span> <span class="comment">// indirect</span></span><br><span class="line">	github.com/<span class="keyword">go</span>-playground/validator/v10 v10<span class="number">.10</span><span class="number">.0</span> <span class="comment">// indirect</span></span><br><span class="line">	github.com/goccy/<span class="keyword">go</span>-json v0<span class="number">.9</span><span class="number">.6</span> <span class="comment">// indirect</span></span><br><span class="line">    ...</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
+<table>
+<thead>
+<tr>
+<th align="center">具体操作</th>
+<th align="center">Kafka</th>
+<th align="center">BMQ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">重启</td>
+<td align="center">需要数据复制，分钟级重启</td>
+<td align="center">重启后可直接对外服务，秒级完成</td>
+</tr>
+<tr>
+<td align="center">替换</td>
+<td align="center">需要数据复制，分钟级替换，甚至天级别</td>
+<td align="center">替换后可直接对外服务，秒级完成</td>
+</tr>
+<tr>
+<td align="center">扩容</td>
+<td align="center">需要数据复制，分钟级扩容，甚至天级别</td>
+<td align="center">扩容后可直接对外服务，秒级完成</td>
+</tr>
+<tr>
+<td align="center">缩容</td>
+<td align="center">需要数据复制，分钟级缩容，甚至天级别</td>
+<td align="center">缩容后可直接对外服务，秒级完成</td>
+</tr>
+</tbody></table>
 <ul>
-<li>单元依赖标识：<code>[Module Path][Version/Pseudo-version]</code></li>
-</ul>
-<h5 id="2-2-2-依赖配置-version"><a href="#2-2-2-依赖配置-version" class="headerlink" title="2.2.2 依赖配置-version"></a>2.2.2 依赖配置-version</h5><ul>
-<li>语义化版本：<code>$&#123;MAJOR&#125;.$&#123;MINOR&#125;.$&#123;PATCH&#125;</code> <ul>
-<li>不同的 <code>MAJOR</code> 之间的代码是隔离的</li>
-<li><code>MINOR</code> 用于新增函数等修改</li>
-<li><code>PATCH</code> 用于补丁，代码bug的修复</li>
-</ul>
+<li><p>文件结构：</p>
+<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Kafka%E5%92%8CBMQ%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94.png"></p>
+<p>在 <code>Kafka</code> <code>Partition</code> 的基础之上，<code>BMQ</code> 还将 <code>Partition</code> 分为多个 <code>Segment</code> ，然后部署在不同的数据节点上。</p>
 </li>
 </ul>
-<h5 id="2-2-3-依赖配置-indirect"><a href="#2-2-3-依赖配置-indirect" class="headerlink" title="2.2.3 依赖配置-indirect"></a>2.2.3 依赖配置-indirect</h5><ul>
-<li>A-&gt;B-&gt;C：<ul>
-<li>A-&gt;B 直接依赖</li>
-<li><strong>A-&gt;C 间接依赖（indirect）</strong></li>
-</ul>
-</li>
-</ul>
-<h5 id="2-2-4-依赖分发-回源"><a href="#2-2-4-依赖分发-回源" class="headerlink" title="2.2.4 依赖分发-回源"></a>2.2.4 依赖分发-回源</h5><ul>
-<li>如果将依赖包托管在第三方平台上，会有几个问题：<ol>
-<li>无法保证构建稳定性：增加&#x2F;修改&#x2F;删除软件版本</li>
-<li>无法保证依赖可用性：删除软件</li>
-<li>增加第三方压力：代码托管平台负载问题</li>
-</ol>
-</li>
-</ul>
-<h5 id="2-2-5依赖分发-Proxy"><a href="#2-2-5依赖分发-Proxy" class="headerlink" title="2.2.5依赖分发-Proxy"></a>2.2.5依赖分发-Proxy</h5><ul>
-<li>为了解决 <code>2.2.4</code> 提出的问题，要用到 Proxy。<ul>
-<li>Proxy 会<strong>缓存依赖库</strong>，实现稳定、可靠的分发。</li>
-<li>可以将 Proxy 看作是依赖源和开发平台之间的一个“中间商”，该“中间商”会<strong>存储依赖源的各种版本库</strong>，以防在依赖源发生改变后，开发平台无法使用最初依赖的版本库的问题。</li>
-</ul>
-</li>
-</ul>
-<h2 id="Go语言工程实践之测试"><a href="#Go语言工程实践之测试" class="headerlink" title="Go语言工程实践之测试"></a>Go语言工程实践之测试</h2><h3 id="03-测试"><a href="#03-测试" class="headerlink" title="03 测试"></a>03 测试</h3><ul>
-<li><p>测试是应用发布上线前的最后一步，覆盖率高的测试可以保证上线的应用的可靠性、稳定性和安全性，是避免事故的最后一道屏障。</p>
-</li>
-<li><p>测试主要分为三种：</p>
+<h3 id="3-3-BMQ高级特性"><a href="#3-3-BMQ高级特性" class="headerlink" title="3.3 BMQ高级特性"></a>3.3 BMQ高级特性</h3><ul>
+<li><p>除了消息队列基本的操作之外，<code>BMQ</code> 还支持许多高级特性：</p>
 <ul>
-<li><p>回归测试：QA人工测试</p>
+<li><p><strong>泳道消息</strong>：用于解决主干泳道流量隔离问题以及泳道资源重复创建问题。</p>
 </li>
-<li><p>集成测试：对系统功能进行测试</p>
+<li><p><strong>Databus</strong>：用于简化消息队列客户端复杂度、解耦业务与 <code>Topic</code>、缓解集群压力，提高吞吐。</p>
 </li>
-<li><p><strong>单元测试</strong>：开发者对单独的模块进行测试。 -&gt; 保证质量、提升效率</p>
-<img src="../images/Go语言工程实践/单元测试.png" style="zoom: 50%;" /></li>
-</ul>
+<li><p><strong>Mirror</strong>：使用 <code>Mirror</code> 通过最终一致的方式，解决跨 Region 读写问题。</p>
 </li>
-</ul>
-<h4 id="3-1-单元测试"><a href="#3-1-单元测试" class="headerlink" title="3.1 单元测试"></a>3.1 单元测试</h4><h5 id="3-1-1-规则"><a href="#3-1-1-规则" class="headerlink" title="3.1.1 规则"></a>3.1.1 规则</h5><ul>
-<li><p>所有测试文件以 <code>_test.go</code> 结尾</p>
+<li><p><strong>Index</strong>：在 <code>BMQ</code> 中将数据结构化，配置索引 DDL，异步构建索引后，通过 Index Query 服务读出数据。</p>
 </li>
-<li><p>测试函数命名规范为：<code>func TestXxx(t *testing.T) &#123;&#125;</code> </p>
-</li>
-<li><p>初始化逻辑放在 <code>TestMain</code> 中：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestMain</span><span class="params">(m *testing.M)</span></span> &#123;</span><br><span class="line">    <span class="comment">//测试前：数据装载、配置初始化等前置工作</span></span><br><span class="line">    </span><br><span class="line">    code := m.Run()</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//测试后：释放资源等收尾工作</span></span><br><span class="line">    </span><br><span class="line">    os.Exit(code)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h5 id="3-1-2-例子"><a href="#3-1-2-例子" class="headerlink" title="3.1.2 例子"></a>3.1.2 例子</h5><ul>
-<li><p>接下来以一个返回字符串的函数的测试为例，展示测试函数的使用：</p>
-<ul>
-<li><p>被测试函数：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">HelloTom</span><span class="params">()</span></span> <span class="type">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;Jerry&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个函数的本意是返回 “Tom” 字符串，但是却返回了 “Jerry”。</p>
-</li>
-<li><p>测试函数：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestHelloTom</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">    output := HelloTom()</span><br><span class="line">    expectOutput := <span class="string">&quot;Tom&quot;</span></span><br><span class="line">    <span class="keyword">if</span> output != expectOutput &#123;</span><br><span class="line">        t.Errorf(<span class="string">&quot;Expected %s do not match actual %s&quot;</span>, expectOutput, output)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在测试函数中检测出了问题。</p>
+<li><p><strong>Parquet</strong>：<code>Apache Parquet</code> 是 <code>Hadoop</code> 生态圈中一种新型<strong>列式存储</strong>格式，它可以兼容 <code>Hadoop</code> 生态圈中大多数计算框架(<code>Hadoop</code>、<code>Sprk</code>等)，被多种查询引擎支持(<code>Hive</code>、<code>Impala</code>、<code>Drill</code>等)。</p>
+<p>直接在 <code>BMQ</code> 中将数据结构化，通过<code>Parquet Engine</code>，可以使用不同的方式构建 <code>Parquet</code> 格式文件。</p>
 </li>
 </ul>
 </li>
 </ul>
-<h5 id="3-1-3-运行"><a href="#3-1-3-运行" class="headerlink" title="3.1.3 运行"></a>3.1.3 运行</h5><ul>
-<li><p>在 VScode 中，可以在 <code>Xxx_test.go</code> 文件中，通过点击测试函数左侧的执行符号，方便地进行测试，如下图是测试结果：</p>
-<p><img src="/../images/Go%E8%AF%AD%E8%A8%80%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/%E6%B5%8B%E8%AF%95HelloTom.png"></p>
-<p>可以看到，检测出了返回字符串不匹配的问题。</p>
-</li>
+<h2 id="04-RocketMQ"><a href="#04-RocketMQ" class="headerlink" title="04 RocketMQ"></a>04 RocketMQ</h2><h3 id="4-1-使用场景"><a href="#4-1-使用场景" class="headerlink" title="4.1 使用场景"></a>4.1 使用场景</h3><ul>
+<li>针对电商业务线，其业务涉及广泛，如注册、订单、库存、物流等；同时，也会涉及许多业务峰值时刻，如秒杀活动、周年庆、定期特惠等。</li>
 </ul>
-<h5 id="★3-1-4-覆盖率"><a href="#★3-1-4-覆盖率" class="headerlink" title="★3.1.4 覆盖率"></a>★3.1.4 覆盖率</h5><ul>
-<li><p>代码覆盖率，是一种通过计算测试过程中 <code>被执行的源代码</code> 占 <code>全部源代码</code> 的比例，进而间接度量软件质量的方法。它在保证测试质量的时候潜在保证实际产品的质量，可以基于此在程序中寻找没有被测试用例测试过的地方，进一步创建新的测试用例来增加覆盖率。</p>
-</li>
-<li><p>在实际项目中，一般覆盖率在 50%~60% 之间，较高覆盖率能达到 80%+。</p>
-<p>可以通过下面的方法尽可能地提高覆盖率：</p>
-<ol>
-<li>测试分支相互独立，全面覆盖。</li>
-<li>测试单元粒度足够小，函数单一职责。</li>
-</ol>
-</li>
-</ul>
-<h4 id="3-2-单元测试-依赖"><a href="#3-2-单元测试-依赖" class="headerlink" title="3.2 单元测试-依赖"></a>3.2 单元测试-依赖</h4><ul>
-<li>单元测试要求<strong>幂等&amp;稳定</strong>：<ul>
-<li><strong>幂等</strong>：重复运行测试一个 case 时，其结果应保持相同。</li>
-<li><strong>稳定</strong>：单元测试之间是相互隔离的。</li>
-</ul>
-</li>
-</ul>
-<h4 id="3-3-单元测试-Mock"><a href="#3-3-单元测试-Mock" class="headerlink" title="3.3 单元测试-Mock"></a>3.3 单元测试-Mock</h4><ul>
-<li><p>Mock 意为 “<strong>模仿的；模拟的</strong>”，是指在测试过程中，对于某些不容易构造或者不容易获取的对象，用一个虚拟的 Mock 对象来创建以便测试的测试方法。</p>
-<p>例如：在单元测试过程中，数据可能需要经过多方获取，且流程复杂：</p>
-<p><img src="/../images/Go%E8%AF%AD%E8%A8%80%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/mock.png"></p>
-<p><code>Class A </code>要从 <code>Class B</code> 和<code>Class C</code>中获取数据，而 <code>Class C </code>中该数据又来源于 <code>Class D </code>和 <code>Class E</code>，这时可以利用 Mock 去构造虚拟的<code>Class B</code> 和<code>Class C</code>对象用于<code>Class A </code>的测试，因为我们只是想测试class A的行为是否符合预期，并不需要去测试依赖对象。</p>
-</li>
-<li><p>常用的 Mock 测试包：<a href="https://github.com/bouk/monkey">bouk&#x2F;monkey: Monkey patching in Go (github.com)</a> </p>
-</li>
-<li><p>快速 Mock 函数：</p>
-<ul>
-<li>为一个函数打桩：用打桩函数替代要测试的目标函数，既能对函数的功能进行测试，又不需要对目标函数中所需的文件有强依赖。</li>
-<li>为一个方法打桩</li>
-</ul>
-</li>
-</ul>
-<h4 id="3-4-基准测试"><a href="#3-4-基准测试" class="headerlink" title="3.4 基准测试"></a>3.4 基准测试</h4><ul>
-<li>用于优化代码，对当前代码进行分析。-&gt; 内置的测试框架提供了基准测试的能力。</li>
-</ul>
-<h3 id="04-项目实践"><a href="#04-项目实践" class="headerlink" title="04 项目实践"></a>04 项目实践</h3><ul>
-<li><p>以<strong>掘金社区话题页面</strong>为例，讲述项目开发的流程：</p>
-<p><img src="/../images/Go%E8%AF%AD%E8%A8%80%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/%E7%A4%BE%E5%8C%BA%E8%AF%9D%E9%A2%98%E9%A1%B5%E9%9D%A2.png"></p>
-</li>
-</ul>
-<h4 id="4-1-需求描述"><a href="#4-1-需求描述" class="headerlink" title="4.1 需求描述"></a>4.1 需求描述</h4><ol>
-<li>展示话题（标题，文字描述）和回帖列表；</li>
-<li>暂不考虑前端页面实现，仅仅实现一个本地 web 服务；</li>
-<li>话题和回帖数据用文件存储。</li>
-</ol>
-<h4 id="4-2-需求用例"><a href="#4-2-需求用例" class="headerlink" title="4.2 需求用例"></a>4.2 需求用例</h4><ul>
-<li><p>用 <code>UML</code> 来形象直观地表示需求。在这个项目中，<code>UML</code> 图展示如下：</p>
-<img src="../images/Go语言工程实践/UML.png" style="zoom: 50%;" /></li>
-</ul>
-<h4 id="4-3-ER图"><a href="#4-3-ER图" class="headerlink" title="4.3 ER图"></a>4.3 ER图</h4><ul>
-<li><p>ER：Entity Relationship，实体关系。</p>
-<p>ER 图表征了现实世界的概念模型及它们之间的关系。在这个项目中，ER 图展示如下：</p>
-<img src="../images/Go语言工程实践/ER图.png" style="zoom: 50%;" />
-
-<p>Topic 和 Post 是一对多的关系。</p>
-</li>
-</ul>
-<h4 id="4-4-分层结构"><a href="#4-4-分层结构" class="headerlink" title="4.4 分层结构"></a>4.4 分层结构</h4><ul>
-<li><p>主要采用分层结构来进行项目代码的设计，这样做逻辑清晰，职责明确，通过各层之间暴露的接口来进行合作，而不需要知道其他层的代码实现细节，有利于提高代码编写的效率。</p>
-</li>
-<li><p>分层结构主要分为以下几层：</p>
-<img src="../images/Go语言工程实践/分层结构.png" style="zoom:50%;" />
-
-<ul>
-<li><strong>数据层</strong>：数据 Model，外部数据的增删改查；</li>
-<li><strong>逻辑层</strong>：业务 Entity，处理核心业务逻辑输出；</li>
-<li><strong>视图层</strong>：视图 view，处理和外部的交互逻辑。</li>
+<h3 id="4-2-RocketMQ和Kafka对比"><a href="#4-2-RocketMQ和Kafka对比" class="headerlink" title="4.2 RocketMQ和Kafka对比"></a>4.2 RocketMQ和Kafka对比</h3><table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">Kafka</th>
+<th align="center">RocketMQ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">逻辑队列</td>
+<td align="center">Topic</td>
+<td align="center">Topic</td>
+</tr>
+<tr>
+<td align="center">消息体</td>
+<td align="center">Message</td>
+<td align="center">Message</td>
+</tr>
+<tr>
+<td align="center"><strong>标签</strong></td>
+<td align="center"><strong>无</strong></td>
+<td align="center"><strong>Tag</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>分区</strong></td>
+<td align="center"><strong>Partition</strong></td>
+<td align="center"><strong>ConsumerQueue</strong></td>
+</tr>
+<tr>
+<td align="center">生产者</td>
+<td align="center">Producer</td>
+<td align="center">Producer</td>
+</tr>
+<tr>
+<td align="center"><strong>生产者集群</strong></td>
+<td align="center"><strong>无</strong></td>
+<td align="center"><strong>Producer Group</strong></td>
+</tr>
+<tr>
+<td align="center">消费者</td>
+<td align="center">Consumer</td>
+<td align="center">Consumer</td>
+</tr>
+<tr>
+<td align="center">消费者集群</td>
+<td align="center"><strong>Consumer Group</strong></td>
+<td align="center"><strong>Consumer Group</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>集群控制器</strong></td>
+<td align="center"><strong>Controller</strong></td>
+<td align="center"><strong>Nameserver</strong></td>
+</tr>
+</tbody></table>
+<h3 id="4-3-RocketMQ架构"><a href="#4-3-RocketMQ架构" class="headerlink" title="4.3 RocketMQ架构"></a>4.3 RocketMQ架构</h3><p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/RocketMQ%E6%9E%B6%E6%9E%84.png"></p>
+<h3 id="4-4-RocketMQ高级特性"><a href="#4-4-RocketMQ高级特性" class="headerlink" title="4.4 RocketMQ高级特性"></a>4.4 RocketMQ高级特性</h3><ul>
+<li><code>RocketMQ</code>支持了一些高级特性：<ul>
+<li><strong>事务保证</strong></li>
+<li><strong>延迟发送</strong></li>
+<li><strong>消费重试和死信队列</strong></li>
 </ul>
 </li>
-</ul>
-<h4 id="4-5-组件工具"><a href="#4-5-组件工具" class="headerlink" title="4.5 组件工具"></a>4.5 组件工具</h4><ul>
-<li><p>我们在搭建社区话题页面时，并不需要从零开始一步步搭建，而可以站在巨人的肩膀上，在他人开源的框架的基础之上进行业务开发。</p>
-<p>这是一个开源的 Gin 高性能 go web 框架：<a href="https://github.com/gin-gonic/gin#installation">gin-gonic&#x2F;gin: Gin is a HTTP web framework written in Go (Golang). </a></p>
-</li>
-</ul>
-<h4 id="4-6-项目搭建流程"><a href="#4-6-项目搭建流程" class="headerlink" title="4.6 项目搭建流程"></a>4.6 项目搭建流程</h4><ol>
-<li><p>在项目构建之初，我们用 <code>go mod init</code> 进行初始化，然后通过 <code>go get gopkg.in/gin-gonic/gin.v1@v1.3.0</code> 来远程拉取代码包及其依赖包，并自动完成编译和安装。</p>
-</li>
-<li><p>根据之前的需求分析对<strong>数据层 Repository</strong> 的数据库部分进行代码编写，应该实现两个基本的查询操作：</p>
-<ul>
-<li>根据话题 Id 查询话题：<code>QueryTopicById</code> </li>
-<li>根据话题 Id 查询所有帖子数据：<code>QueryPostByParentId</code></li>
-</ul>
-</li>
-<li><p>在数据库中查询到数据后，将其传输到<strong>逻辑层 Service</strong> 进行处理：参数校验 <code>checkParam</code>  -&gt; 准备数据  <code>prepareInfo</code> -&gt; 组装实体 <code>packPageInfo</code> ；</p>
-</li>
-<li><p>然后在<strong>视图层 Controller</strong> 将从逻辑层得到的数据显示为话题页面。</p>
-</li>
-<li><p>最后，利用 <code>gin</code> 这个框架来完成整个项目的实现。包括：</p>
-<ol>
-<li>初始化数据索引；</li>
-<li>初始化引擎配置；</li>
-<li>构建路由；</li>
-<li>启动服务。</li>
-</ol>
-</li>
-</ol>
-<ul>
-<li>项目代码可见 <a href="https://github.com/Moonlight-Zhao/go-project-example">Moonlight-Zhao&#x2F;go-project-example (github.com)</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -543,218 +519,258 @@
       </categories>
   </entry>
   <entry>
-    <title>走进消息队列</title>
-    <url>/2023/05/20/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</url>
-    <content><![CDATA[<h1 id="走进消息队列"><a href="#走进消息队列" class="headerlink" title="走进消息队列"></a>走进消息队列</h1><h2 id="01-消息队列前世今生"><a href="#01-消息队列前世今生" class="headerlink" title="01 消息队列前世今生"></a>01 消息队列前世今生</h2><h3 id="1-1-什么是消息队列"><a href="#1-1-什么是消息队列" class="headerlink" title="1.1 什么是消息队列"></a>1.1 什么是消息队列</h3><ul>
-<li><p>消息队列 (MQ，Message Queue)，指<strong>保存消息的一个容器，本质是个队列</strong>。但这个队列呢，<strong>需要支持高吞吐，高并发，并且高可用</strong>。</p>
-<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/MQ.png"></p>
-</li>
-</ul>
-<h3 id="1-2-消息队列发展历程"><a href="#1-2-消息队列发展历程" class="headerlink" title="1.2 消息队列发展历程"></a>1.2 消息队列发展历程</h3><ul>
-<li>消息队列从上个世纪九十年代就出现了。<ul>
-<li>1993年，IBM 开发了自己的商业消息队列 <code>IBM MQ/WebSphere</code></li>
-<li>1997年，微软发布了 <code>MSMQ</code></li>
-</ul>
-</li>
-<li>然后在二十世纪初，消息队列有了更进一步的发展。<ul>
-<li>2001年，Sun 开发了针对 Java 语言的 <code>JMS</code>，本质上是一套 Java API</li>
-<li>2004年，发布了 MQ 规范 <code>AMQP</code>，同年 <code>RabbitMQ</code> 面世</li>
-<li><strong>2010年，开源了 <code>Kafka</code></strong></li>
-<li><strong>2011年，阿里中间件团队自研了 <code>RocketMQ</code></strong></li>
-<li>2012年，Yahoo 开发了 <code>Pulsar</code></li>
-</ul>
-</li>
-</ul>
-<h3 id="1-3-业界消息队列对比"><a href="#1-3-业界消息队列对比" class="headerlink" title="1.3 业界消息队列对比"></a>1.3 业界消息队列对比</h3><ul>
-<li><code>Kafka</code>：分布式的、分区的、多副本的日志提交服务，在<strong>高吞吐场景</strong>下发挥较为出色</li>
-<li><code>RocketMQ</code>：低延迟、强一致、高性能、高可靠、万亿级容量和灵活的可扩展性，在一些<strong>实时场景</strong>中运用较广</li>
-<li><code>Pulsar</code>：是下一代云原生分布式消息流平台，集消息、存储、轻量化函数式计算为一体、采用存算分离的架构设计</li>
-<li><code>BMQ</code>：和 <code>Pulsar</code> 架构类似，存算分离，初期定位是承接高吞吐的离线业务场景，逐步替换掉对应的 <code>Kafka</code> 集群</li>
-</ul>
-<h2 id="02-消息队列Kafka"><a href="#02-消息队列Kafka" class="headerlink" title="02 消息队列Kafka"></a>02 消息队列Kafka</h2><ul>
-<li>主要用于离线的消息处理，如日志信息、Metrics数据、用户行为。</li>
-</ul>
-<h3 id="2-1-如何使用Kafka"><a href="#2-1-如何使用Kafka" class="headerlink" title="2.1 如何使用Kafka"></a>2.1 如何使用Kafka</h3><ol>
-<li>创建集群</li>
-<li>新增 <code>Topic</code></li>
-<li>编写生产者逻辑</li>
-<li>编写消费者逻辑</li>
+    <title>Go语言工程实践</title>
+    <url>/2023/05/19/Go%E8%AF%AD%E8%A8%80%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/</url>
+    <content><![CDATA[<h1 id="Go语言工程实践"><a href="#Go语言工程实践" class="headerlink" title="Go语言工程实践"></a>Go语言工程实践</h1><h2 id="Go语言进阶与依赖管理"><a href="#Go语言进阶与依赖管理" class="headerlink" title="Go语言进阶与依赖管理"></a>Go语言进阶与依赖管理</h2><h3 id="01-语言进阶"><a href="#01-语言进阶" class="headerlink" title="01 语言进阶"></a>01 语言进阶</h3><h4 id="并发vs并行"><a href="#并发vs并行" class="headerlink" title="并发vs并行"></a>并发vs并行</h4><ol>
+<li>并发：多线程程序在一个核的CPU上运行</li>
+<li>并行：多线程程序在多个核的CPU上运行</li>
 </ol>
-<h3 id="2-2-基本概念"><a href="#2-2-基本概念" class="headerlink" title="2.2 基本概念"></a>2.2 基本概念</h3><ul>
-<li><p><code>Kafka</code>的工作流程如下：</p>
-<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Kafka%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.png"></p>
-<p>其中：</p>
 <ul>
-<li><code>Topic</code>：逻辑队列，不同 <code>Topic</code> 可以建立不同的 <code>Topic</code> 对象</li>
-<li><code>Partition</code>：<code>Topic</code> 的分区，<strong>不同的分区的消息可以并发处理</strong></li>
-<li><code>Cluster</code>：物理集群，每个集群中可以建立多个不同的 <code>Topic</code></li>
-<li><code>Producer</code>：<strong>生产者</strong>，负责将业务消息发送到 <code>Topic</code> 中</li>
-<li><code>Consumer</code>：<strong>消费者</strong>，负责消费 <code>Topic</code> 中的消息</li>
-<li><code>ConsumerGroup</code>：消费者组，不同组的 <code>Consumer</code> 消费进度互不千涉</li>
+<li>Go 可以充分发挥多核优势，高效运行</li>
 </ul>
-</li>
-<li><p>对于 <code>Topic</code> 内部：</p>
-<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Kafka%20Topic%E5%86%85%E9%83%A8.png"></p>
+<h4 id="1-1-Goroutine"><a href="#1-1-Goroutine" class="headerlink" title="1.1 Goroutine"></a>1.1 Goroutine</h4><ul>
+<li><strong>协程</strong>：用户态，轻量级线程，栈 KB 级别</li>
+<li><strong>线程</strong>：内核态，线程跑多个协程，栈 MB 级别</li>
+</ul>
+<img src="../images/Go语言工程实践/协程-线程.png" style="zoom: 50%;" />
+
 <ul>
-<li><code>Offset</code>：消息在 <code>Partition</code> 内的相对位置信息，可以理解为唯一 ID，在 <code>Partition</code> 内部严格递增。</li>
+<li>在Go语言中，为了创建协程，只需要在调用的函数前面<strong>添加 <code>go</code> 关键字</strong>即可。</li>
 </ul>
-</li>
-<li><p>对于 <code>Partition</code> 内部：</p>
-<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Topic%20Partition%E5%86%85%E9%83%A8.png"></p>
+<h4 id="1-2-CSP"><a href="#1-2-CSP" class="headerlink" title="1.2 CSP"></a>1.2 CSP</h4><ul>
+<li><p>CSP（Communicating Sequential Processes）</p>
+<p>Go 提倡通过通信共享内存而不是通过共享内存而实现通信。</p>
+<img src="../images/Go语言工程实践/CSP.png" style="zoom: 67%;" /></li>
+</ul>
+<h4 id="1-3-Channel"><a href="#1-3-Channel" class="headerlink" title="1.3 Channel"></a>1.3 Channel</h4><ul>
+<li><p>通过 <code>make(chan 元素类型, [缓冲大小])</code> 创建</p>
 <ul>
-<li>每个 <code>Partition</code> 都有多个 <code>Replica</code>，<code>Leader Replica</code> 将会从 <code>ISR</code> 中选出。<ul>
-<li>如果 <code>Leader Replica</code> 所在的机器发生宕机，那就可以从 <code>ISR</code> 中重新挑选一个 <code>Replica</code> 成为 <code>Leader Replica</code> ，以保证业务的正常运行。</li>
+<li>无缓冲通道：<code>make(chan int)</code> </li>
+<li>有缓冲通道：<code>make(chan int, 2)</code></li>
 </ul>
-</li>
+<img src="../images/Go语言工程实践/channel.png" style="zoom:67%;" /></li>
 </ul>
-</li>
+<h4 id="1-4-并发安全-Lock"><a href="#1-4-并发安全-Lock" class="headerlink" title="1.4 并发安全 Lock"></a>1.4 并发安全 Lock</h4><ul>
+<li>为了保证协程并发的安全进行，需要进行加锁操作。</li>
 </ul>
-<h3 id="2-3-Kafka架构"><a href="#2-3-Kafka架构" class="headerlink" title="2.3 Kafka架构"></a>2.3 Kafka架构</h3><ul>
-<li><p>2.2 节已经说过，每个 <code>Partition</code> 都有多个 <code>Replica</code>，而且这些 <code>Replica</code> 并<strong>不是保存在同一台机器上</strong>的。如下图所示，<code>Broker Controller</code> 会通过计算来确定将 <code>Topic</code> 的 <code>Partition</code> 及其副本都保存在哪些 <code>Broker</code> 上。</p>
-<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Kafka%E6%9E%B6%E6%9E%84.png"></p>
-<p>然后在这些 <code>Broker</code> 的上层，有 <code>ZooKeeper</code> 来负责存储集群元信息，包括分区分配信息等。</p>
-<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Kafka%E6%9E%B6%E6%9E%842.png"></p>
-</li>
-</ul>
-<h3 id="2-4-Kafka提高吞吐和稳定性的措施"><a href="#2-4-Kafka提高吞吐和稳定性的措施" class="headerlink" title="2.4 Kafka提高吞吐和稳定性的措施"></a>2.4 Kafka提高吞吐和稳定性的措施</h3><ul>
-<li>从 <code>Producer</code> 方面：批量发送、数据压缩</li>
-<li>从 <code>Broker</code> 方面：顺序写，消息索引，零拷贝</li>
-<li>从 <code>Consumer</code> 方面：Rebalance</li>
-</ul>
-<h3 id="2-5-Kafka的不足之处"><a href="#2-5-Kafka的不足之处" class="headerlink" title="2.5 Kafka的不足之处"></a>2.5 Kafka的不足之处</h3><ol>
-<li>运维成本高；</li>
-<li>对于负载不均衡的场景，解决方案复杂；</li>
-<li>没有自己的缓存，完全依赖 Page Cache；</li>
-<li><code>Controller</code> 和 <code>Coordinator</code> 和 <code>Broker</code> 在同一进程中，大量 <code>lO</code> 会造成其性能下降。</li>
+<h4 id="1-5-WaitGroup"><a href="#1-5-WaitGroup" class="headerlink" title="1.5 WaitGroup"></a>1.5 WaitGroup</h4><ul>
+<li><p>用 <code>WaitGroup</code> 来优雅地实现并发进程的同步。</p>
+<p><code>WaitGroup</code> 包含有一个计数器：</p>
+<ol>
+<li>开启协程，计数器 +1；</li>
+<li>协程执行结束，计数器 -1；</li>
+<li>主协程会阻塞直到计数器为 0（即计数器为 0 表示所有子协程执行完毕）。</li>
 </ol>
-<h2 id="03-消息队列BMQ"><a href="#03-消息队列BMQ" class="headerlink" title="03 消息队列BMQ"></a>03 消息队列BMQ</h2><ul>
-<li><code>BMQ</code> 兼容了 <code>Kafka</code> 协议，存算分离，云原生消息队列。</li>
-</ul>
-<h3 id="3-1-BMQ架构"><a href="#3-1-BMQ架构" class="headerlink" title="3.1 BMQ架构"></a>3.1 BMQ架构</h3><ul>
-<li><p>由于 <code>BMQ</code> 兼容了 <code>Kafka</code> 协议，所以它的架构与 <code>Kafka</code> 类似：</p>
-<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/BMQ%E6%9E%B6%E6%9E%84.png"></p>
 </li>
 </ul>
-<h3 id="3-2-BMQ和Kafka对比"><a href="#3-2-BMQ和Kafka对比" class="headerlink" title="3.2 BMQ和Kafka对比"></a>3.2 BMQ和Kafka对比</h3><ul>
-<li>运维对比：</li>
+<h3 id="02-依赖管理"><a href="#02-依赖管理" class="headerlink" title="02 依赖管理"></a>02 依赖管理</h3><h4 id="2-1-Go依赖管理演进"><a href="#2-1-Go依赖管理演进" class="headerlink" title="2.1 Go依赖管理演进"></a>2.1 Go依赖管理演进</h4><ul>
+<li>GOPATH -&gt; Go Vendor -&gt; Go Module<ul>
+<li>不同环境（项目）依赖的版本不同</li>
+<li>控制依赖库的版本</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th align="center">具体操作</th>
-<th align="center">Kafka</th>
-<th align="center">BMQ</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">重启</td>
-<td align="center">需要数据复制，分钟级重启</td>
-<td align="center">重启后可直接对外服务，秒级完成</td>
-</tr>
-<tr>
-<td align="center">替换</td>
-<td align="center">需要数据复制，分钟级替换，甚至天级别</td>
-<td align="center">替换后可直接对外服务，秒级完成</td>
-</tr>
-<tr>
-<td align="center">扩容</td>
-<td align="center">需要数据复制，分钟级扩容，甚至天级别</td>
-<td align="center">扩容后可直接对外服务，秒级完成</td>
-</tr>
-<tr>
-<td align="center">缩容</td>
-<td align="center">需要数据复制，分钟级缩容，甚至天级别</td>
-<td align="center">缩容后可直接对外服务，秒级完成</td>
-</tr>
-</tbody></table>
+</li>
+</ul>
+<h5 id="2-1-1-GOPATH"><a href="#2-1-1-GOPATH" class="headerlink" title="2.1.1 GOPATH"></a>2.1.1 GOPATH</h5><ul>
+<li><p>环境变量 <code>$GOPATH</code> ：</p>
+<img src="../images/Go语言工程实践/GOPATH.png" style="zoom: 67%;" />
+
+<p>GOPATH 问题在于无法实现 package 的多版本控制。</p>
+</li>
+</ul>
+<h5 id="2-1-2-Go-Vendor"><a href="#2-1-2-Go-Vendor" class="headerlink" title="2.1.2 Go Vendor"></a>2.1.2 Go Vendor</h5><ul>
+<li><p>项目目录下增加 vendor 文件，所有依赖包副本形式放在 <code>$ProjectRoot/vendor</code> </p>
+<p>通过每个项目引入一份依赖的副本，解决了多个项目需要同一个 package 依赖的冲突问题。</p>
+</li>
+<li><p>依赖寻址方式：vendor &#x3D;&gt; GOPATH（先 vendor，vendor 没有再 GOPATH）</p>
+</li>
+</ul>
+<h5 id="2-1-3-Go-Module"><a href="#2-1-3-Go-Module" class="headerlink" title="2.1.3 Go Module"></a>2.1.3 Go Module</h5><ul>
+<li>通过 <code>go.mod</code> 文件管理依赖包版本。通过 <code>go get/go mod</code> 指令工具管理依赖包。</li>
+</ul>
+<h4 id="2-2-Go-Module依赖管理三要素"><a href="#2-2-Go-Module依赖管理三要素" class="headerlink" title="2.2 Go Module依赖管理三要素"></a>2.2 Go Module依赖管理三要素</h4><ol>
+<li>配置文件，描述依赖：<code>go.mod</code></li>
+<li>中心仓库管理依赖库：<code>Proxy</code> </li>
+<li>本地工具：<code>go get/go mod</code></li>
+</ol>
+<h5 id="2-2-1-依赖配置-go-mod"><a href="#2-2-1-依赖配置-go-mod" class="headerlink" title="2.2.1 依赖配置-go.mod"></a>2.2.1 依赖配置-go.mod</h5><figure class="highlight go"><table><tr><td class="code"><pre><span class="line">module github.com/Moonlight-Zhao/<span class="keyword">go</span>-project-example		<span class="comment">//依赖管理基本单元</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">go</span> <span class="number">1.16</span>		<span class="comment">//原生库</span></span><br><span class="line"></span><br><span class="line">require (	<span class="comment">//单元依赖</span></span><br><span class="line">	github.com/gin-contrib/sse v0<span class="number">.1</span><span class="number">.0</span> <span class="comment">// indirect</span></span><br><span class="line">	github.com/gin-gonic/gin v1<span class="number">.3</span><span class="number">.0</span> <span class="comment">// indirect</span></span><br><span class="line">	github.com/<span class="keyword">go</span>-playground/validator/v10 v10<span class="number">.10</span><span class="number">.0</span> <span class="comment">// indirect</span></span><br><span class="line">	github.com/goccy/<span class="keyword">go</span>-json v0<span class="number">.9</span><span class="number">.6</span> <span class="comment">// indirect</span></span><br><span class="line">    ...</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li><p>文件结构：</p>
-<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Kafka%E5%92%8CBMQ%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94.png"></p>
-<p>在 <code>Kafka</code> <code>Partition</code> 的基础之上，<code>BMQ</code> 还将 <code>Partition</code> 分为多个 <code>Segment</code> ，然后部署在不同的数据节点上。</p>
+<li>单元依赖标识：<code>[Module Path][Version/Pseudo-version]</code></li>
+</ul>
+<h5 id="2-2-2-依赖配置-version"><a href="#2-2-2-依赖配置-version" class="headerlink" title="2.2.2 依赖配置-version"></a>2.2.2 依赖配置-version</h5><ul>
+<li>语义化版本：<code>$&#123;MAJOR&#125;.$&#123;MINOR&#125;.$&#123;PATCH&#125;</code> <ul>
+<li>不同的 <code>MAJOR</code> 之间的代码是隔离的</li>
+<li><code>MINOR</code> 用于新增函数等修改</li>
+<li><code>PATCH</code> 用于补丁，代码bug的修复</li>
+</ul>
 </li>
 </ul>
-<h3 id="3-3-BMQ高级特性"><a href="#3-3-BMQ高级特性" class="headerlink" title="3.3 BMQ高级特性"></a>3.3 BMQ高级特性</h3><ul>
-<li><p>除了消息队列基本的操作之外，<code>BMQ</code> 还支持许多高级特性：</p>
+<h5 id="2-2-3-依赖配置-indirect"><a href="#2-2-3-依赖配置-indirect" class="headerlink" title="2.2.3 依赖配置-indirect"></a>2.2.3 依赖配置-indirect</h5><ul>
+<li>A-&gt;B-&gt;C：<ul>
+<li>A-&gt;B 直接依赖</li>
+<li><strong>A-&gt;C 间接依赖（indirect）</strong></li>
+</ul>
+</li>
+</ul>
+<h5 id="2-2-4-依赖分发-回源"><a href="#2-2-4-依赖分发-回源" class="headerlink" title="2.2.4 依赖分发-回源"></a>2.2.4 依赖分发-回源</h5><ul>
+<li>如果将依赖包托管在第三方平台上，会有几个问题：<ol>
+<li>无法保证构建稳定性：增加&#x2F;修改&#x2F;删除软件版本</li>
+<li>无法保证依赖可用性：删除软件</li>
+<li>增加第三方压力：代码托管平台负载问题</li>
+</ol>
+</li>
+</ul>
+<h5 id="2-2-5依赖分发-Proxy"><a href="#2-2-5依赖分发-Proxy" class="headerlink" title="2.2.5依赖分发-Proxy"></a>2.2.5依赖分发-Proxy</h5><ul>
+<li>为了解决 <code>2.2.4</code> 提出的问题，要用到 Proxy。<ul>
+<li>Proxy 会<strong>缓存依赖库</strong>，实现稳定、可靠的分发。</li>
+<li>可以将 Proxy 看作是依赖源和开发平台之间的一个“中间商”，该“中间商”会<strong>存储依赖源的各种版本库</strong>，以防在依赖源发生改变后，开发平台无法使用最初依赖的版本库的问题。</li>
+</ul>
+</li>
+</ul>
+<h2 id="Go语言工程实践之测试"><a href="#Go语言工程实践之测试" class="headerlink" title="Go语言工程实践之测试"></a>Go语言工程实践之测试</h2><h3 id="03-测试"><a href="#03-测试" class="headerlink" title="03 测试"></a>03 测试</h3><ul>
+<li><p>测试是应用发布上线前的最后一步，覆盖率高的测试可以保证上线的应用的可靠性、稳定性和安全性，是避免事故的最后一道屏障。</p>
+</li>
+<li><p>测试主要分为三种：</p>
 <ul>
-<li><p><strong>泳道消息</strong>：用于解决主干泳道流量隔离问题以及泳道资源重复创建问题。</p>
+<li><p>回归测试：QA人工测试</p>
 </li>
-<li><p><strong>Databus</strong>：用于简化消息队列客户端复杂度、解耦业务与 <code>Topic</code>、缓解集群压力，提高吞吐。</p>
+<li><p>集成测试：对系统功能进行测试</p>
 </li>
-<li><p><strong>Mirror</strong>：使用 <code>Mirror</code> 通过最终一致的方式，解决跨 Region 读写问题。</p>
+<li><p><strong>单元测试</strong>：开发者对单独的模块进行测试。 -&gt; 保证质量、提升效率</p>
+<img src="../images/Go语言工程实践/单元测试.png" style="zoom: 50%;" /></li>
+</ul>
 </li>
-<li><p><strong>Index</strong>：在 <code>BMQ</code> 中将数据结构化，配置索引 DDL，异步构建索引后，通过 Index Query 服务读出数据。</p>
+</ul>
+<h4 id="3-1-单元测试"><a href="#3-1-单元测试" class="headerlink" title="3.1 单元测试"></a>3.1 单元测试</h4><h5 id="3-1-1-规则"><a href="#3-1-1-规则" class="headerlink" title="3.1.1 规则"></a>3.1.1 规则</h5><ul>
+<li><p>所有测试文件以 <code>_test.go</code> 结尾</p>
 </li>
-<li><p><strong>Parquet</strong>：<code>Apache Parquet</code> 是 <code>Hadoop</code> 生态圈中一种新型<strong>列式存储</strong>格式，它可以兼容 <code>Hadoop</code> 生态圈中大多数计算框架(<code>Hadoop</code>、<code>Sprk</code>等)，被多种查询引擎支持(<code>Hive</code>、<code>Impala</code>、<code>Drill</code>等)。</p>
-<p>直接在 <code>BMQ</code> 中将数据结构化，通过<code>Parquet Engine</code>，可以使用不同的方式构建 <code>Parquet</code> 格式文件。</p>
+<li><p>测试函数命名规范为：<code>func TestXxx(t *testing.T) &#123;&#125;</code> </p>
+</li>
+<li><p>初始化逻辑放在 <code>TestMain</code> 中：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestMain</span><span class="params">(m *testing.M)</span></span> &#123;</span><br><span class="line">    <span class="comment">//测试前：数据装载、配置初始化等前置工作</span></span><br><span class="line">    </span><br><span class="line">    code := m.Run()</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//测试后：释放资源等收尾工作</span></span><br><span class="line">    </span><br><span class="line">    os.Exit(code)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="3-1-2-例子"><a href="#3-1-2-例子" class="headerlink" title="3.1.2 例子"></a>3.1.2 例子</h5><ul>
+<li><p>接下来以一个返回字符串的函数的测试为例，展示测试函数的使用：</p>
+<ul>
+<li><p>被测试函数：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">HelloTom</span><span class="params">()</span></span> <span class="type">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;Jerry&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个函数的本意是返回 “Tom” 字符串，但是却返回了 “Jerry”。</p>
+</li>
+<li><p>测试函数：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestHelloTom</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">    output := HelloTom()</span><br><span class="line">    expectOutput := <span class="string">&quot;Tom&quot;</span></span><br><span class="line">    <span class="keyword">if</span> output != expectOutput &#123;</span><br><span class="line">        t.Errorf(<span class="string">&quot;Expected %s do not match actual %s&quot;</span>, expectOutput, output)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在测试函数中检测出了问题。</p>
 </li>
 </ul>
 </li>
 </ul>
-<h2 id="04-RocketMQ"><a href="#04-RocketMQ" class="headerlink" title="04 RocketMQ"></a>04 RocketMQ</h2><h3 id="4-1-使用场景"><a href="#4-1-使用场景" class="headerlink" title="4.1 使用场景"></a>4.1 使用场景</h3><ul>
-<li>针对电商业务线，其业务涉及广泛，如注册、订单、库存、物流等；同时，也会涉及许多业务峰值时刻，如秒杀活动、周年庆、定期特惠等。</li>
+<h5 id="3-1-3-运行"><a href="#3-1-3-运行" class="headerlink" title="3.1.3 运行"></a>3.1.3 运行</h5><ul>
+<li><p>在 VScode 中，可以在 <code>Xxx_test.go</code> 文件中，通过点击测试函数左侧的执行符号，方便地进行测试，如下图是测试结果：</p>
+<p><img src="/../images/Go%E8%AF%AD%E8%A8%80%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/%E6%B5%8B%E8%AF%95HelloTom.png"></p>
+<p>可以看到，检测出了返回字符串不匹配的问题。</p>
+</li>
 </ul>
-<h3 id="4-2-RocketMQ和Kafka对比"><a href="#4-2-RocketMQ和Kafka对比" class="headerlink" title="4.2 RocketMQ和Kafka对比"></a>4.2 RocketMQ和Kafka对比</h3><table>
-<thead>
-<tr>
-<th align="center">名称</th>
-<th align="center">Kafka</th>
-<th align="center">RocketMQ</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">逻辑队列</td>
-<td align="center">Topic</td>
-<td align="center">Topic</td>
-</tr>
-<tr>
-<td align="center">消息体</td>
-<td align="center">Message</td>
-<td align="center">Message</td>
-</tr>
-<tr>
-<td align="center"><strong>标签</strong></td>
-<td align="center"><strong>无</strong></td>
-<td align="center"><strong>Tag</strong></td>
-</tr>
-<tr>
-<td align="center"><strong>分区</strong></td>
-<td align="center"><strong>Partition</strong></td>
-<td align="center"><strong>ConsumerQueue</strong></td>
-</tr>
-<tr>
-<td align="center">生产者</td>
-<td align="center">Producer</td>
-<td align="center">Producer</td>
-</tr>
-<tr>
-<td align="center"><strong>生产者集群</strong></td>
-<td align="center"><strong>无</strong></td>
-<td align="center"><strong>Producer Group</strong></td>
-</tr>
-<tr>
-<td align="center">消费者</td>
-<td align="center">Consumer</td>
-<td align="center">Consumer</td>
-</tr>
-<tr>
-<td align="center">消费者集群</td>
-<td align="center"><strong>Consumer Group</strong></td>
-<td align="center"><strong>Consumer Group</strong></td>
-</tr>
-<tr>
-<td align="center"><strong>集群控制器</strong></td>
-<td align="center"><strong>Controller</strong></td>
-<td align="center"><strong>Nameserver</strong></td>
-</tr>
-</tbody></table>
-<h3 id="4-3-RocketMQ架构"><a href="#4-3-RocketMQ架构" class="headerlink" title="4.3 RocketMQ架构"></a>4.3 RocketMQ架构</h3><p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/RocketMQ%E6%9E%B6%E6%9E%84.png"></p>
-<h3 id="4-4-RocketMQ高级特性"><a href="#4-4-RocketMQ高级特性" class="headerlink" title="4.4 RocketMQ高级特性"></a>4.4 RocketMQ高级特性</h3><ul>
-<li><code>RocketMQ</code>支持了一些高级特性：<ul>
-<li><strong>事务保证</strong></li>
-<li><strong>延迟发送</strong></li>
-<li><strong>消费重试和死信队列</strong></li>
+<h5 id="★3-1-4-覆盖率"><a href="#★3-1-4-覆盖率" class="headerlink" title="★3.1.4 覆盖率"></a>★3.1.4 覆盖率</h5><ul>
+<li><p>代码覆盖率，是一种通过计算测试过程中 <code>被执行的源代码</code> 占 <code>全部源代码</code> 的比例，进而间接度量软件质量的方法。它在保证测试质量的时候潜在保证实际产品的质量，可以基于此在程序中寻找没有被测试用例测试过的地方，进一步创建新的测试用例来增加覆盖率。</p>
+</li>
+<li><p>在实际项目中，一般覆盖率在 50%~60% 之间，较高覆盖率能达到 80%+。</p>
+<p>可以通过下面的方法尽可能地提高覆盖率：</p>
+<ol>
+<li>测试分支相互独立，全面覆盖。</li>
+<li>测试单元粒度足够小，函数单一职责。</li>
+</ol>
+</li>
+</ul>
+<h4 id="3-2-单元测试-依赖"><a href="#3-2-单元测试-依赖" class="headerlink" title="3.2 单元测试-依赖"></a>3.2 单元测试-依赖</h4><ul>
+<li>单元测试要求<strong>幂等&amp;稳定</strong>：<ul>
+<li><strong>幂等</strong>：重复运行测试一个 case 时，其结果应保持相同。</li>
+<li><strong>稳定</strong>：单元测试之间是相互隔离的。</li>
 </ul>
 </li>
+</ul>
+<h4 id="3-3-单元测试-Mock"><a href="#3-3-单元测试-Mock" class="headerlink" title="3.3 单元测试-Mock"></a>3.3 单元测试-Mock</h4><ul>
+<li><p>Mock 意为 “<strong>模仿的；模拟的</strong>”，是指在测试过程中，对于某些不容易构造或者不容易获取的对象，用一个虚拟的 Mock 对象来创建以便测试的测试方法。</p>
+<p>例如：在单元测试过程中，数据可能需要经过多方获取，且流程复杂：</p>
+<p><img src="/../images/Go%E8%AF%AD%E8%A8%80%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/mock.png"></p>
+<p><code>Class A </code>要从 <code>Class B</code> 和<code>Class C</code>中获取数据，而 <code>Class C </code>中该数据又来源于 <code>Class D </code>和 <code>Class E</code>，这时可以利用 Mock 去构造虚拟的<code>Class B</code> 和<code>Class C</code>对象用于<code>Class A </code>的测试，因为我们只是想测试class A的行为是否符合预期，并不需要去测试依赖对象。</p>
+</li>
+<li><p>常用的 Mock 测试包：<a href="https://github.com/bouk/monkey">bouk&#x2F;monkey: Monkey patching in Go (github.com)</a> </p>
+</li>
+<li><p>快速 Mock 函数：</p>
+<ul>
+<li>为一个函数打桩：用打桩函数替代要测试的目标函数，既能对函数的功能进行测试，又不需要对目标函数中所需的文件有强依赖。</li>
+<li>为一个方法打桩</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-4-基准测试"><a href="#3-4-基准测试" class="headerlink" title="3.4 基准测试"></a>3.4 基准测试</h4><ul>
+<li>用于优化代码，对当前代码进行分析。-&gt; 内置的测试框架提供了基准测试的能力。</li>
+</ul>
+<h3 id="04-项目实践"><a href="#04-项目实践" class="headerlink" title="04 项目实践"></a>04 项目实践</h3><ul>
+<li><p>以<strong>掘金社区话题页面</strong>为例，讲述项目开发的流程：</p>
+<p><img src="/../images/Go%E8%AF%AD%E8%A8%80%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/%E7%A4%BE%E5%8C%BA%E8%AF%9D%E9%A2%98%E9%A1%B5%E9%9D%A2.png"></p>
+</li>
+</ul>
+<h4 id="4-1-需求描述"><a href="#4-1-需求描述" class="headerlink" title="4.1 需求描述"></a>4.1 需求描述</h4><ol>
+<li>展示话题（标题，文字描述）和回帖列表；</li>
+<li>暂不考虑前端页面实现，仅仅实现一个本地 web 服务；</li>
+<li>话题和回帖数据用文件存储。</li>
+</ol>
+<h4 id="4-2-需求用例"><a href="#4-2-需求用例" class="headerlink" title="4.2 需求用例"></a>4.2 需求用例</h4><ul>
+<li><p>用 <code>UML</code> 来形象直观地表示需求。在这个项目中，<code>UML</code> 图展示如下：</p>
+<img src="../images/Go语言工程实践/UML.png" style="zoom: 50%;" /></li>
+</ul>
+<h4 id="4-3-ER图"><a href="#4-3-ER图" class="headerlink" title="4.3 ER图"></a>4.3 ER图</h4><ul>
+<li><p>ER：Entity Relationship，实体关系。</p>
+<p>ER 图表征了现实世界的概念模型及它们之间的关系。在这个项目中，ER 图展示如下：</p>
+<img src="../images/Go语言工程实践/ER图.png" style="zoom: 50%;" />
+
+<p>Topic 和 Post 是一对多的关系。</p>
+</li>
+</ul>
+<h4 id="4-4-分层结构"><a href="#4-4-分层结构" class="headerlink" title="4.4 分层结构"></a>4.4 分层结构</h4><ul>
+<li><p>主要采用分层结构来进行项目代码的设计，这样做逻辑清晰，职责明确，通过各层之间暴露的接口来进行合作，而不需要知道其他层的代码实现细节，有利于提高代码编写的效率。</p>
+</li>
+<li><p>分层结构主要分为以下几层：</p>
+<img src="../images/Go语言工程实践/分层结构.png" style="zoom:50%;" />
+
+<ul>
+<li><strong>数据层</strong>：数据 Model，外部数据的增删改查；</li>
+<li><strong>逻辑层</strong>：业务 Entity，处理核心业务逻辑输出；</li>
+<li><strong>视图层</strong>：视图 view，处理和外部的交互逻辑。</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-5-组件工具"><a href="#4-5-组件工具" class="headerlink" title="4.5 组件工具"></a>4.5 组件工具</h4><ul>
+<li><p>我们在搭建社区话题页面时，并不需要从零开始一步步搭建，而可以站在巨人的肩膀上，在他人开源的框架的基础之上进行业务开发。</p>
+<p>这是一个开源的 Gin 高性能 go web 框架：<a href="https://github.com/gin-gonic/gin#installation">gin-gonic&#x2F;gin: Gin is a HTTP web framework written in Go (Golang). </a></p>
+</li>
+</ul>
+<h4 id="4-6-项目搭建流程"><a href="#4-6-项目搭建流程" class="headerlink" title="4.6 项目搭建流程"></a>4.6 项目搭建流程</h4><ol>
+<li><p>在项目构建之初，我们用 <code>go mod init</code> 进行初始化，然后通过 <code>go get gopkg.in/gin-gonic/gin.v1@v1.3.0</code> 来远程拉取代码包及其依赖包，并自动完成编译和安装。</p>
+</li>
+<li><p>根据之前的需求分析对<strong>数据层 Repository</strong> 的数据库部分进行代码编写，应该实现两个基本的查询操作：</p>
+<ul>
+<li>根据话题 Id 查询话题：<code>QueryTopicById</code> </li>
+<li>根据话题 Id 查询所有帖子数据：<code>QueryPostByParentId</code></li>
+</ul>
+</li>
+<li><p>在数据库中查询到数据后，将其传输到<strong>逻辑层 Service</strong> 进行处理：参数校验 <code>checkParam</code>  -&gt; 准备数据  <code>prepareInfo</code> -&gt; 组装实体 <code>packPageInfo</code> ；</p>
+</li>
+<li><p>然后在<strong>视图层 Controller</strong> 将从逻辑层得到的数据显示为话题页面。</p>
+</li>
+<li><p>最后，利用 <code>gin</code> 这个框架来完成整个项目的实现。包括：</p>
+<ol>
+<li>初始化数据索引；</li>
+<li>初始化引擎配置；</li>
+<li>构建路由；</li>
+<li>启动服务。</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>项目代码可见 <a href="https://github.com/Moonlight-Zhao/go-project-example">Moonlight-Zhao&#x2F;go-project-example (github.com)</a></li>
 </ul>
 ]]></content>
       <categories>
