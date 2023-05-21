@@ -260,6 +260,80 @@
       </categories>
   </entry>
   <entry>
+    <title>设计模式之Database/SQL与GORM</title>
+    <url>/2023/05/20/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8BDatabase-SQL%E4%B8%8EGORM/</url>
+    <content><![CDATA[<h1 id="设计模式之Database-x2F-SQL与GORM"><a href="#设计模式之Database-x2F-SQL与GORM" class="headerlink" title="设计模式之Database&#x2F;SQL与GORM"></a>设计模式之Database&#x2F;SQL与GORM</h1><h2 id="Database-x2F-sql-及-GORM-相关解读"><a href="#Database-x2F-sql-及-GORM-相关解读" class="headerlink" title="Database&#x2F;sql 及 GORM 相关解读"></a>Database&#x2F;sql 及 GORM 相关解读</h2><h3 id="01-理解-database-x2F-sql"><a href="#01-理解-database-x2F-sql" class="headerlink" title="01 理解 database&#x2F;sql"></a>01 理解 database&#x2F;sql</h3><ul>
+<li><p><code>database/sql</code> 是 Go 语言中的一个<strong>标准库</strong>，用于处理关系型数据库的操作。<code>database/sql</code> 库的目标在于可以让用户用统一的接口去操作不同的数据库。</p>
+<p>可以理解为：上层应用在查询数据时，并不是直接与数据库进行交互，而是通过 Go 的 <code>database/sql</code> 标准库，去从数据库中查询数据、得到数据，即真正与数据库<strong>直接</strong>打交道的，是 <code>database/sql</code> 这个“中间层”。</p>
+</li>
+</ul>
+<h4 id="1-1-设计原理"><a href="#1-1-设计原理" class="headerlink" title="1.1 设计原理"></a>1.1 设计原理</h4><ul>
+<li><p><code>database/sql</code> 对上层应用程序提供了标准的 <code>api</code> 操作接口；</p>
+<p>对下层数据库暴露一些简单的驱动（<code>Driver</code>）接口；</p>
+<p>在内部实现了连接池（<strong>池化技术</strong>）的管理。</p>
+<p><img src="/../images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8BDatabase-SQL%E4%B8%8EGORM/database_sql%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86.png"></p>
+</li>
+</ul>
+<h3 id="02-GORM-简介"><a href="#02-GORM-简介" class="headerlink" title="02 GORM 简介"></a>02 GORM 简介</h3><ul>
+<li><p><code>GORM</code> 是设计简洁、功能强大、自由扩展的全功能 <code>ORM</code>。</p>
+<ul>
+<li><code>ORM</code>：即 <code>Object-Relational Mapping</code>，它的作用是<strong>在关系型数据库和对象之间作一个映射</strong>，这样，我们在具体的操作数据库的时候，就不需要再去和复杂的SQL语句打交道，只要像平时操作对象一样操作它就可以了。</li>
+</ul>
+</li>
+<li><p><code>GORM</code> 设计原则：API 精简、测试优先、最小惊讶、灵活扩展、无依赖 可信赖</p>
+<p>功能完善：</p>
+<ul>
+<li>关联 : 一对一、一对多、单表自关联、多态；Preload、Joins 预加载、级联删除；关联模式；自定义关联表</li>
+<li>事务 : 事务代码块、嵌套事务、Save Point</li>
+<li>多数据库、读写分离、命名参数、Map、子查询、分组条件、代码共享、SQL表达式(查询、创建、更新)、自动选字段、查询优化器</li>
+<li>字段权限、软删除、批量数据处理、Prepared Stmt、自定义类型、命名策略、虚拟字段、自动 track 时间、SQL Builder、Logger</li>
+<li>代码生成、复合主键、Constraint、Prometheus、Auto Migration、真·跨数据库兼容…</li>
+<li>多模式灵活自由扩展</li>
+</ul>
+</li>
+</ul>
+<h3 id="03-GORM-设计原理"><a href="#03-GORM-设计原理" class="headerlink" title="03 GORM 设计原理"></a>03 GORM 设计原理</h3><ul>
+<li><p><code>GORM</code> 处于上层应用程序和 <code>database/sql</code> 标准库之间。</p>
+<p><img src="/../images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8BDatabase-SQL%E4%B8%8EGORM/GORM%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86.png"></p>
+</li>
+</ul>
+<h4 id="3-1-GORM-中-SQL-是怎么生成的"><a href="#3-1-GORM-中-SQL-是怎么生成的" class="headerlink" title="3.1 GORM 中 SQL 是怎么生成的"></a>3.1 GORM 中 SQL 是怎么生成的</h4><ol>
+<li><p>首先解析 <code>SQL</code> 语句：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> `name`, `age`, `employee_number`		<span class="comment">-- SELECT Clause </span></span><br><span class="line"><span class="keyword">FROM</span> `users` 								<span class="comment">-- FROM Clause </span></span><br><span class="line"><span class="keyword">WHERE</span> role <span class="operator">&lt;&gt;</span> &quot;manager&quot; <span class="keyword">AND</span> age <span class="operator">&gt;</span> <span class="number">35</span> 		<span class="comment">-- WHERE Clause </span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> age <span class="keyword">DESC</span> 							<span class="comment">-- ORDER BY Clause </span></span><br><span class="line">LIMIT <span class="number">10</span> <span class="keyword">OFFSET</span> <span class="number">10</span> 							<span class="comment">-- LIMIT Clause </span></span><br><span class="line"><span class="keyword">FOR</span> <span class="keyword">UPDATE</span>									<span class="comment">-- FOR Clause  </span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到 <code>SQL</code> 语句<strong>由许多子句</strong>构成，其中有些子句是必须的（如 <code>SELECT Clause</code>、<code>FROM Clause</code>），有些是不强制要求的（如 <code>WHERE Clause</code>、<code>ORDER BY Clause</code>）</p>
+</li>
+<li><p>再来解析 <code>GORM</code> 语句：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">db.Where(<span class="string">&quot;role ?&quot;</span>, <span class="string">&quot;manager&quot;</span>). Where(<span class="string">&quot;age &gt; ?&quot;</span>, <span class="number">35</span>). Limit(<span class="number">100</span>). Order(<span class="string">&quot;age desc&quot;</span>). Find(&amp;user)</span><br></pre></td></tr></table></figure>
+
+<p><code>GORM</code> 语句由 <code>Chain Method</code> 和 <code>Finisher Method</code> 组成</p>
+<ul>
+<li><code>Chain Method</code> 即为为 <code>GORM</code> 语句添加 <code>GORM Clause</code> 的方法。</li>
+<li><code>Finisher Method</code> 决定了 <code>SQL</code> 语句的执行类型。</li>
+</ul>
+</li>
+<li><p>我们的目标就是能<strong>从 <code>GORM</code> 语句得到 <code>SQL</code> 语句</strong>。如下图所示：</p>
+<p><img src="/../images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8BDatabase-SQL%E4%B8%8EGORM/GORM%E8%AF%AD%E5%8F%A5-SQL%E8%AF%AD%E5%8F%A5.png"></p>
+<p>至于实现的代码，可以见 <code>GORM</code> 源代码。</p>
+</li>
+</ol>
+<h4 id="3-2-插件是怎么工作的"><a href="#3-2-插件是怎么工作的" class="headerlink" title="3.2 插件是怎么工作的"></a>3.2 插件是怎么工作的</h4><ul>
+<li><p>3.1 节已经说过，<code>Finisher Method</code> 决定了 <code>SQL</code> 语句的执行类型，而在 <code>GORM</code> 生成 <code>SQL</code> 并执行之前，会执行 <code>Callbacks</code> 函数，即使用到了插件。</p>
+<p>如下图，<code>GORM</code> 对每一组类型，都有一组 <code>Callbacks</code> 函数调用，即使用到了插件。</p>
+<p><img src="/../images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8BDatabase-SQL%E4%B8%8EGORM/%E6%8F%92%E4%BB%B6%E5%B7%A5%E4%BD%9C.png"></p>
+</li>
+<li><p>以 <code>Create</code> 类型为例，<code>GORM</code> 预定义了一组 <code>Callbacks</code>：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">db.Callback().Create(). Register(<span class="string">&quot;gorm : begin_transaction&quot;</span>, BeginTransaction)</span><br><span class="line">db.Callback().Create(). Register(<span class="string">&quot;gorm : before_create&quot;</span>, BeforeCreate)</span><br><span class="line">db.Callback().Create(). Register(<span class="string">&quot;gorm : save_before_associations&quot;</span>, SaveBeforeAssociations) db.Callback().Create(). Register(<span class="string">&quot;gorm : create&quot;</span>, Create) </span><br><span class="line">db.Callback().Create(). Register(<span class="string">&quot;gorm : save_after_associations&quot;</span>, SaveAfterAssociations) </span><br><span class="line">db.Callback().Create(). Register(<span class="string">&quot;gorm : after_create&quot;</span>, AfterCreate) </span><br><span class="line">db.Callback().Create(). Register(<span class="string">&quot;gorm : commit_or_rollback_transaction&quot;</span>, CommitOrRollback)</span><br></pre></td></tr></table></figure>
+
+<p>在执行 <code>Create</code> 的过程中，就会依次调用注册的 <code>Create Callbacks</code>。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>ByteDance-BackEnd-notebook</category>
+      </categories>
+  </entry>
+  <entry>
     <title>带你认识存储&amp;数据库</title>
     <url>/2023/05/19/%E5%B8%A6%E4%BD%A0%E8%AE%A4%E8%AF%86%E5%AD%98%E5%82%A8-%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
     <content><![CDATA[<h1 id="带你认识存储-amp-数据库"><a href="#带你认识存储-amp-数据库" class="headerlink" title="带你认识存储&amp;数据库"></a>带你认识存储&amp;数据库</h1><h2 id="认识存储与数据库"><a href="#认识存储与数据库" class="headerlink" title="认识存储与数据库"></a>认识存储与数据库</h2><h3 id="01-经典案例"><a href="#01-经典案例" class="headerlink" title="01 经典案例"></a>01 经典案例</h3><ul>
@@ -469,72 +543,217 @@
       </categories>
   </entry>
   <entry>
-    <title>设计模式之Database/SQL与GORM</title>
-    <url>/2023/05/20/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8BDatabase-SQL%E4%B8%8EGORM/</url>
-    <content><![CDATA[<h1 id="设计模式之Database-x2F-SQL与GORM"><a href="#设计模式之Database-x2F-SQL与GORM" class="headerlink" title="设计模式之Database&#x2F;SQL与GORM"></a>设计模式之Database&#x2F;SQL与GORM</h1><h2 id="Database-x2F-sql-及-GORM-相关解读"><a href="#Database-x2F-sql-及-GORM-相关解读" class="headerlink" title="Database&#x2F;sql 及 GORM 相关解读"></a>Database&#x2F;sql 及 GORM 相关解读</h2><h3 id="01-理解-database-x2F-sql"><a href="#01-理解-database-x2F-sql" class="headerlink" title="01 理解 database&#x2F;sql"></a>01 理解 database&#x2F;sql</h3><ul>
-<li><p><code>database/sql</code> 是 Go 语言中的一个<strong>标准库</strong>，用于处理关系型数据库的操作。<code>database/sql</code> 库的目标在于可以让用户用统一的接口去操作不同的数据库。</p>
-<p>可以理解为：上层应用在查询数据时，并不是直接与数据库进行交互，而是通过 Go 的 <code>database/sql</code> 标准库，去从数据库中查询数据、得到数据，即真正与数据库<strong>直接</strong>打交道的，是 <code>database/sql</code> 这个“中间层”。</p>
+    <title>走进消息队列</title>
+    <url>/2023/05/20/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</url>
+    <content><![CDATA[<h1 id="走进消息队列"><a href="#走进消息队列" class="headerlink" title="走进消息队列"></a>走进消息队列</h1><h2 id="01-消息队列前世今生"><a href="#01-消息队列前世今生" class="headerlink" title="01 消息队列前世今生"></a>01 消息队列前世今生</h2><h3 id="1-1-什么是消息队列"><a href="#1-1-什么是消息队列" class="headerlink" title="1.1 什么是消息队列"></a>1.1 什么是消息队列</h3><ul>
+<li><p>消息队列 (MQ，Message Queue)，指<strong>保存消息的一个容器，本质是个队列</strong>。但这个队列呢，<strong>需要支持高吞吐，高并发，并且高可用</strong>。</p>
+<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/MQ.png"></p>
 </li>
 </ul>
-<h4 id="1-1-设计原理"><a href="#1-1-设计原理" class="headerlink" title="1.1 设计原理"></a>1.1 设计原理</h4><ul>
-<li><p><code>database/sql</code> 对上层应用程序提供了标准的 <code>api</code> 操作接口；</p>
-<p>对下层数据库暴露一些简单的驱动（<code>Driver</code>）接口；</p>
-<p>在内部实现了连接池（<strong>池化技术</strong>）的管理。</p>
-<p><img src="/../images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8BDatabase-SQL%E4%B8%8EGORM/database_sql%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86.png"></p>
-</li>
-</ul>
-<h3 id="02-GORM-简介"><a href="#02-GORM-简介" class="headerlink" title="02 GORM 简介"></a>02 GORM 简介</h3><ul>
-<li><p><code>GORM</code> 是设计简洁、功能强大、自由扩展的全功能 <code>ORM</code>。</p>
-<ul>
-<li><code>ORM</code>：即 <code>Object-Relational Mapping</code>，它的作用是<strong>在关系型数据库和对象之间作一个映射</strong>，这样，我们在具体的操作数据库的时候，就不需要再去和复杂的SQL语句打交道，只要像平时操作对象一样操作它就可以了。</li>
+<h3 id="1-2-消息队列发展历程"><a href="#1-2-消息队列发展历程" class="headerlink" title="1.2 消息队列发展历程"></a>1.2 消息队列发展历程</h3><ul>
+<li>消息队列从上个世纪九十年代就出现了。<ul>
+<li>1993年，IBM 开发了自己的商业消息队列 <code>IBM MQ/WebSphere</code></li>
+<li>1997年，微软发布了 <code>MSMQ</code></li>
 </ul>
 </li>
-<li><p><code>GORM</code> 设计原则：API 精简、测试优先、最小惊讶、灵活扩展、无依赖 可信赖</p>
-<p>功能完善：</p>
-<ul>
-<li>关联 : 一对一、一对多、单表自关联、多态；Preload、Joins 预加载、级联删除；关联模式；自定义关联表</li>
-<li>事务 : 事务代码块、嵌套事务、Save Point</li>
-<li>多数据库、读写分离、命名参数、Map、子查询、分组条件、代码共享、SQL表达式(查询、创建、更新)、自动选字段、查询优化器</li>
-<li>字段权限、软删除、批量数据处理、Prepared Stmt、自定义类型、命名策略、虚拟字段、自动 track 时间、SQL Builder、Logger</li>
-<li>代码生成、复合主键、Constraint、Prometheus、Auto Migration、真·跨数据库兼容…</li>
-<li>多模式灵活自由扩展</li>
+<li>然后在二十世纪初，消息队列有了更进一步的发展。<ul>
+<li>2001年，Sun 开发了针对 Java 语言的 <code>JMS</code>，本质上是一套 Java API</li>
+<li>2004年，发布了 MQ 规范 <code>AMQP</code>，同年 <code>RabbitMQ</code> 面世</li>
+<li><strong>2010年，开源了 <code>Kafka</code></strong></li>
+<li><strong>2011年，阿里中间件团队自研了 <code>RocketMQ</code></strong></li>
+<li>2012年，Yahoo 开发了 <code>Pulsar</code></li>
 </ul>
 </li>
 </ul>
-<h3 id="03-GORM-设计原理"><a href="#03-GORM-设计原理" class="headerlink" title="03 GORM 设计原理"></a>03 GORM 设计原理</h3><ul>
-<li><p><code>GORM</code> 处于上层应用程序和 <code>database/sql</code> 标准库之间。</p>
-<p><img src="/../images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8BDatabase-SQL%E4%B8%8EGORM/GORM%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86.png"></p>
-</li>
+<h3 id="1-3-业界消息队列对比"><a href="#1-3-业界消息队列对比" class="headerlink" title="1.3 业界消息队列对比"></a>1.3 业界消息队列对比</h3><ul>
+<li><code>Kafka</code>：分布式的、分区的、多副本的日志提交服务，在<strong>高吞吐场景</strong>下发挥较为出色</li>
+<li><code>RocketMQ</code>：低延迟、强一致、高性能、高可靠、万亿级容量和灵活的可扩展性，在一些<strong>实时场景</strong>中运用较广</li>
+<li><code>Pulsar</code>：是下一代云原生分布式消息流平台，集消息、存储、轻量化函数式计算为一体、采用存算分离的架构设计</li>
+<li><code>BMQ</code>：和 <code>Pulsar</code> 架构类似，存算分离，初期定位是承接高吞吐的离线业务场景，逐步替换掉对应的 <code>Kafka</code> 集群</li>
 </ul>
-<h4 id="3-1-GORM-中-SQL-是怎么生成的"><a href="#3-1-GORM-中-SQL-是怎么生成的" class="headerlink" title="3.1 GORM 中 SQL 是怎么生成的"></a>3.1 GORM 中 SQL 是怎么生成的</h4><ol>
-<li><p>首先解析 <code>SQL</code> 语句：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> `name`, `age`, `employee_number`		<span class="comment">-- SELECT Clause </span></span><br><span class="line"><span class="keyword">FROM</span> `users` 								<span class="comment">-- FROM Clause </span></span><br><span class="line"><span class="keyword">WHERE</span> role <span class="operator">&lt;&gt;</span> &quot;manager&quot; <span class="keyword">AND</span> age <span class="operator">&gt;</span> <span class="number">35</span> 		<span class="comment">-- WHERE Clause </span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> age <span class="keyword">DESC</span> 							<span class="comment">-- ORDER BY Clause </span></span><br><span class="line">LIMIT <span class="number">10</span> <span class="keyword">OFFSET</span> <span class="number">10</span> 							<span class="comment">-- LIMIT Clause </span></span><br><span class="line"><span class="keyword">FOR</span> <span class="keyword">UPDATE</span>									<span class="comment">-- FOR Clause  </span></span><br></pre></td></tr></table></figure>
-
-<p>可以看到 <code>SQL</code> 语句<strong>由许多子句</strong>构成，其中有些子句是必须的（如 <code>SELECT Clause</code>、<code>FROM Clause</code>），有些是不强制要求的（如 <code>WHERE Clause</code>、<code>ORDER BY Clause</code>）</p>
-</li>
-<li><p>再来解析 <code>GORM</code> 语句：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">db.Where(<span class="string">&quot;role ?&quot;</span>, <span class="string">&quot;manager&quot;</span>). Where(<span class="string">&quot;age &gt; ?&quot;</span>, <span class="number">35</span>). Limit(<span class="number">100</span>). Order(<span class="string">&quot;age desc&quot;</span>). Find(&amp;user)</span><br></pre></td></tr></table></figure>
-
-<p><code>GORM</code> 语句由 <code>Chain Method</code> 和 <code>Finisher Method</code> 组成</p>
-<ul>
-<li><code>Chain Method</code> 即为为 <code>GORM</code> 语句添加 <code>GORM Clause</code> 的方法。</li>
-<li><code>Finisher Method</code> 决定了 <code>SQL</code> 语句的执行类型。</li>
+<h2 id="02-消息队列Kafka"><a href="#02-消息队列Kafka" class="headerlink" title="02 消息队列Kafka"></a>02 消息队列Kafka</h2><ul>
+<li>主要用于离线的消息处理，如日志信息、Metrics数据、用户行为。</li>
 </ul>
-</li>
-<li><p>我们的目标就是能<strong>从 <code>GORM</code> 语句得到 <code>SQL</code> 语句</strong>。如下图所示：</p>
-<p><img src="/../images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8BDatabase-SQL%E4%B8%8EGORM/GORM%E8%AF%AD%E5%8F%A5-SQL%E8%AF%AD%E5%8F%A5.png"></p>
-<p>至于实现的代码，可以见 <code>GORM</code> 源代码。</p>
-</li>
+<h3 id="2-1-如何使用Kafka"><a href="#2-1-如何使用Kafka" class="headerlink" title="2.1 如何使用Kafka"></a>2.1 如何使用Kafka</h3><ol>
+<li>创建集群</li>
+<li>新增 <code>Topic</code></li>
+<li>编写生产者逻辑</li>
+<li>编写消费者逻辑</li>
 </ol>
-<h4 id="3-2-插件是怎么工作的"><a href="#3-2-插件是怎么工作的" class="headerlink" title="3.2 插件是怎么工作的"></a>3.2 插件是怎么工作的</h4><ul>
-<li><p>3.1 节已经说过，<code>Finisher Method</code> 决定了 <code>SQL</code> 语句的执行类型，而在 <code>GORM</code> 生成 <code>SQL</code> 并执行之前，会执行 <code>Callbacks</code> 函数，即使用到了插件。</p>
-<p>如下图，<code>GORM</code> 对每一组类型，都有一组 <code>Callbacks</code> 函数调用，即使用到了插件。</p>
-<p><img src="/../images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8BDatabase-SQL%E4%B8%8EGORM/%E6%8F%92%E4%BB%B6%E5%B7%A5%E4%BD%9C.png"></p>
+<h3 id="2-2-基本概念"><a href="#2-2-基本概念" class="headerlink" title="2.2 基本概念"></a>2.2 基本概念</h3><ul>
+<li><p><code>Kafka</code>的工作流程如下：</p>
+<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Kafka%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.png"></p>
+<p>其中：</p>
+<ul>
+<li><code>Topic</code>：逻辑队列，不同 <code>Topic</code> 可以建立不同的 <code>Topic</code> 对象</li>
+<li><code>Partition</code>：<code>Topic</code> 的分区，<strong>不同的分区的消息可以并发处理</strong></li>
+<li><code>Cluster</code>：物理集群，每个集群中可以建立多个不同的 <code>Topic</code></li>
+<li><code>Producer</code>：<strong>生产者</strong>，负责将业务消息发送到 <code>Topic</code> 中</li>
+<li><code>Consumer</code>：<strong>消费者</strong>，负责消费 <code>Topic</code> 中的消息</li>
+<li><code>ConsumerGroup</code>：消费者组，不同组的 <code>Consumer</code> 消费进度互不千涉</li>
+</ul>
 </li>
-<li><p>以 <code>Create</code> 类型为例，<code>GORM</code> 预定义了一组 <code>Callbacks</code>：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">db.Callback().Create(). Register(<span class="string">&quot;gorm : begin_transaction&quot;</span>, BeginTransaction)</span><br><span class="line">db.Callback().Create(). Register(<span class="string">&quot;gorm : before_create&quot;</span>, BeforeCreate)</span><br><span class="line">db.Callback().Create(). Register(<span class="string">&quot;gorm : save_before_associations&quot;</span>, SaveBeforeAssociations) db.Callback().Create(). Register(<span class="string">&quot;gorm : create&quot;</span>, Create) </span><br><span class="line">db.Callback().Create(). Register(<span class="string">&quot;gorm : save_after_associations&quot;</span>, SaveAfterAssociations) </span><br><span class="line">db.Callback().Create(). Register(<span class="string">&quot;gorm : after_create&quot;</span>, AfterCreate) </span><br><span class="line">db.Callback().Create(). Register(<span class="string">&quot;gorm : commit_or_rollback_transaction&quot;</span>, CommitOrRollback)</span><br></pre></td></tr></table></figure>
-
-<p>在执行 <code>Create</code> 的过程中，就会依次调用注册的 <code>Create Callbacks</code>。</p>
+<li><p>对于 <code>Topic</code> 内部：</p>
+<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Kafka%20Topic%E5%86%85%E9%83%A8.png"></p>
+<ul>
+<li><code>Offset</code>：消息在 <code>Partition</code> 内的相对位置信息，可以理解为唯一 ID，在 <code>Partition</code> 内部严格递增。</li>
+</ul>
+</li>
+<li><p>对于 <code>Partition</code> 内部：</p>
+<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Topic%20Partition%E5%86%85%E9%83%A8.png"></p>
+<ul>
+<li>每个 <code>Partition</code> 都有多个 <code>Replica</code>，<code>Leader Replica</code> 将会从 <code>ISR</code> 中选出。<ul>
+<li>如果 <code>Leader Replica</code> 所在的机器发生宕机，那就可以从 <code>ISR</code> 中重新挑选一个 <code>Replica</code> 成为 <code>Leader Replica</code> ，以保证业务的正常运行。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-3-Kafka架构"><a href="#2-3-Kafka架构" class="headerlink" title="2.3 Kafka架构"></a>2.3 Kafka架构</h3><ul>
+<li><p>2.2 节已经说过，每个 <code>Partition</code> 都有多个 <code>Replica</code>，而且这些 <code>Replica</code> 并<strong>不是保存在同一台机器上</strong>的。如下图所示，<code>Broker Controller</code> 会通过计算来确定将 <code>Topic</code> 的 <code>Partition</code> 及其副本都保存在哪些 <code>Broker</code> 上。</p>
+<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Kafka%E6%9E%B6%E6%9E%84.png"></p>
+<p>然后在这些 <code>Broker</code> 的上层，有 <code>ZooKeeper</code> 来负责存储集群元信息，包括分区分配信息等。</p>
+<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Kafka%E6%9E%B6%E6%9E%842.png"></p>
+</li>
+</ul>
+<h3 id="2-4-Kafka提高吞吐和稳定性的措施"><a href="#2-4-Kafka提高吞吐和稳定性的措施" class="headerlink" title="2.4 Kafka提高吞吐和稳定性的措施"></a>2.4 Kafka提高吞吐和稳定性的措施</h3><ul>
+<li>从 <code>Producer</code> 方面：批量发送、数据压缩</li>
+<li>从 <code>Broker</code> 方面：顺序写，消息索引，零拷贝</li>
+<li>从 <code>Consumer</code> 方面：Rebalance</li>
+</ul>
+<h3 id="2-5-Kafka的不足之处"><a href="#2-5-Kafka的不足之处" class="headerlink" title="2.5 Kafka的不足之处"></a>2.5 Kafka的不足之处</h3><ol>
+<li>运维成本高；</li>
+<li>对于负载不均衡的场景，解决方案复杂；</li>
+<li>没有自己的缓存，完全依赖 Page Cache；</li>
+<li><code>Controller</code> 和 <code>Coordinator</code> 和 <code>Broker</code> 在同一进程中，大量 <code>lO</code> 会造成其性能下降。</li>
+</ol>
+<h2 id="03-消息队列BMQ"><a href="#03-消息队列BMQ" class="headerlink" title="03 消息队列BMQ"></a>03 消息队列BMQ</h2><ul>
+<li><code>BMQ</code> 兼容了 <code>Kafka</code> 协议，存算分离，云原生消息队列。</li>
+</ul>
+<h3 id="3-1-BMQ架构"><a href="#3-1-BMQ架构" class="headerlink" title="3.1 BMQ架构"></a>3.1 BMQ架构</h3><ul>
+<li><p>由于 <code>BMQ</code> 兼容了 <code>Kafka</code> 协议，所以它的架构与 <code>Kafka</code> 类似：</p>
+<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/BMQ%E6%9E%B6%E6%9E%84.png"></p>
+</li>
+</ul>
+<h3 id="3-2-BMQ和Kafka对比"><a href="#3-2-BMQ和Kafka对比" class="headerlink" title="3.2 BMQ和Kafka对比"></a>3.2 BMQ和Kafka对比</h3><ul>
+<li>运维对比：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">具体操作</th>
+<th align="center">Kafka</th>
+<th align="center">BMQ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">重启</td>
+<td align="center">需要数据复制，分钟级重启</td>
+<td align="center">重启后可直接对外服务，秒级完成</td>
+</tr>
+<tr>
+<td align="center">替换</td>
+<td align="center">需要数据复制，分钟级替换，甚至天级别</td>
+<td align="center">替换后可直接对外服务，秒级完成</td>
+</tr>
+<tr>
+<td align="center">扩容</td>
+<td align="center">需要数据复制，分钟级扩容，甚至天级别</td>
+<td align="center">扩容后可直接对外服务，秒级完成</td>
+</tr>
+<tr>
+<td align="center">缩容</td>
+<td align="center">需要数据复制，分钟级缩容，甚至天级别</td>
+<td align="center">缩容后可直接对外服务，秒级完成</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>文件结构：</p>
+<p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/Kafka%E5%92%8CBMQ%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94.png"></p>
+<p>在 <code>Kafka</code> <code>Partition</code> 的基础之上，<code>BMQ</code> 还将 <code>Partition</code> 分为多个 <code>Segment</code> ，然后部署在不同的数据节点上。</p>
+</li>
+</ul>
+<h3 id="3-3-BMQ高级特性"><a href="#3-3-BMQ高级特性" class="headerlink" title="3.3 BMQ高级特性"></a>3.3 BMQ高级特性</h3><ul>
+<li><p>除了消息队列基本的操作之外，<code>BMQ</code> 还支持许多高级特性：</p>
+<ul>
+<li><p><strong>泳道消息</strong>：用于解决主干泳道流量隔离问题以及泳道资源重复创建问题。</p>
+</li>
+<li><p><strong>Databus</strong>：用于简化消息队列客户端复杂度、解耦业务与 <code>Topic</code>、缓解集群压力，提高吞吐。</p>
+</li>
+<li><p><strong>Mirror</strong>：使用 <code>Mirror</code> 通过最终一致的方式，解决跨 Region 读写问题。</p>
+</li>
+<li><p><strong>Index</strong>：在 <code>BMQ</code> 中将数据结构化，配置索引 DDL，异步构建索引后，通过 Index Query 服务读出数据。</p>
+</li>
+<li><p><strong>Parquet</strong>：<code>Apache Parquet</code> 是 <code>Hadoop</code> 生态圈中一种新型<strong>列式存储</strong>格式，它可以兼容 <code>Hadoop</code> 生态圈中大多数计算框架(<code>Hadoop</code>、<code>Sprk</code>等)，被多种查询引擎支持(<code>Hive</code>、<code>Impala</code>、<code>Drill</code>等)。</p>
+<p>直接在 <code>BMQ</code> 中将数据结构化，通过<code>Parquet Engine</code>，可以使用不同的方式构建 <code>Parquet</code> 格式文件。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="04-RocketMQ"><a href="#04-RocketMQ" class="headerlink" title="04 RocketMQ"></a>04 RocketMQ</h2><h3 id="4-1-使用场景"><a href="#4-1-使用场景" class="headerlink" title="4.1 使用场景"></a>4.1 使用场景</h3><ul>
+<li>针对电商业务线，其业务涉及广泛，如注册、订单、库存、物流等；同时，也会涉及许多业务峰值时刻，如秒杀活动、周年庆、定期特惠等。</li>
+</ul>
+<h3 id="4-2-RocketMQ和Kafka对比"><a href="#4-2-RocketMQ和Kafka对比" class="headerlink" title="4.2 RocketMQ和Kafka对比"></a>4.2 RocketMQ和Kafka对比</h3><table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">Kafka</th>
+<th align="center">RocketMQ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">逻辑队列</td>
+<td align="center">Topic</td>
+<td align="center">Topic</td>
+</tr>
+<tr>
+<td align="center">消息体</td>
+<td align="center">Message</td>
+<td align="center">Message</td>
+</tr>
+<tr>
+<td align="center"><strong>标签</strong></td>
+<td align="center"><strong>无</strong></td>
+<td align="center"><strong>Tag</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>分区</strong></td>
+<td align="center"><strong>Partition</strong></td>
+<td align="center"><strong>ConsumerQueue</strong></td>
+</tr>
+<tr>
+<td align="center">生产者</td>
+<td align="center">Producer</td>
+<td align="center">Producer</td>
+</tr>
+<tr>
+<td align="center"><strong>生产者集群</strong></td>
+<td align="center"><strong>无</strong></td>
+<td align="center"><strong>Producer Group</strong></td>
+</tr>
+<tr>
+<td align="center">消费者</td>
+<td align="center">Consumer</td>
+<td align="center">Consumer</td>
+</tr>
+<tr>
+<td align="center">消费者集群</td>
+<td align="center"><strong>Consumer Group</strong></td>
+<td align="center"><strong>Consumer Group</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>集群控制器</strong></td>
+<td align="center"><strong>Controller</strong></td>
+<td align="center"><strong>Nameserver</strong></td>
+</tr>
+</tbody></table>
+<h3 id="4-3-RocketMQ架构"><a href="#4-3-RocketMQ架构" class="headerlink" title="4.3 RocketMQ架构"></a>4.3 RocketMQ架构</h3><p><img src="/../images/%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/RocketMQ%E6%9E%B6%E6%9E%84.png"></p>
+<h3 id="4-4-RocketMQ高级特性"><a href="#4-4-RocketMQ高级特性" class="headerlink" title="4.4 RocketMQ高级特性"></a>4.4 RocketMQ高级特性</h3><ul>
+<li><code>RocketMQ</code>支持了一些高级特性：<ul>
+<li><strong>事务保证</strong></li>
+<li><strong>延迟发送</strong></li>
+<li><strong>消费重试和死信队列</strong></li>
+</ul>
 </li>
 </ul>
 ]]></content>
