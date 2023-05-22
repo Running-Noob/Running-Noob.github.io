@@ -3,18 +3,196 @@
   <entry>
     <title>博客指南</title>
     <url>/2023/05/21/%E5%8D%9A%E5%AE%A2%E6%8C%87%E5%8D%97/</url>
-    <content><![CDATA[<h1 id="博客指南"><a href="#博客指南" class="headerlink" title="博客指南"></a>博客指南</h1><ul>
+    <content><![CDATA[<blockquote>
+<p><strong>Running Noob 的博客使用指南</strong></p>
+</blockquote>
+<span id="more"></span>
+
+<h1 id="博客指南"><a href="#博客指南" class="headerlink" title="博客指南"></a>博客指南</h1><ul>
 <li><p>Hello，这里是 Running Noob 的 blog，welcome！</p>
 </li>
-<li><p>在这里，主要记录了博主在学习成长过程中的各种笔记，包括阅读论文的总结和心得、本人研究方向的实验平台 <code>WorkflowSim</code> 的原理与使用方法、软件开发过程中的各种相关知识等等。</p>
+<li><p>在这里，主要记录了博主在学习成长过程中的各种笔记，包括所阅读的论文的总结和心得、本人研究方向的实验平台 <code>WorkflowSim</code> 的原理与使用方法、软件开发过程中的各种相关知识等等。</p>
 <p>总的来说，这里是包含博主各种笔记的藏经阁 ~~~ </p>
 </li>
-<li><p>同时，这里也记录并将记录我的各种项目经历与实习经历，可以说是个人成长的一个记录点吧，也希望能给未来想要进入互联网行业的同学一些参考价值 ~ 。</p>
+<li><p>同时，这里也记录并将记录我的各种项目经历与实习经历，可以说是个人成长的一个存档点吧，也希望能给未来想要进入互联网行业的同学一些参考价值 ~ 。</p>
 </li>
-<li><p>未来，博主也有可能在这里分享自己在工作过程中的心得与感悟，于己于人，我想，都是有益的吧。</p>
+<li><p>未来，博主也有可能在这里分享自己在工作过程中的心得与感悟，我想，于己于人，都是有益的吧。</p>
 </li>
 </ul>
 ]]></content>
+  </entry>
+  <entry>
+    <title>ACO algorithm</title>
+    <url>/2023/05/22/ACO-algorithm/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Meta-heuristic algorithm</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>SA algorithm</title>
+    <url>/2023/05/22/SA-algorithm/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Meta-heuristic algorithm</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>GA algorithm</title>
+    <url>/2023/05/22/GA-algorithm/</url>
+    <content><![CDATA[<blockquote>
+<p><strong><code>Genetic algorithm</code>（GA）：遗传算法，是一种通过模拟生物进化的方式来寻找最优解的一类优化算法。这种算法主要依靠遗传、突变和自然选择的机制对问题求解进行高效的迭代搜索。</strong></p>
+</blockquote>
+<span id="more"></span>
+
+<h1 id="GA-algorithm"><a href="#GA-algorithm" class="headerlink" title="GA algorithm"></a>GA algorithm</h1><ul>
+<li><p><strong><code>Genetic algorithm</code>（GA）：遗传算法</strong>，是一种通过模拟生物进化的方式来寻找最优解的一类优化算法。这种算法主要依靠<strong>遗传</strong>、<strong>突变</strong>和<strong>自然选择</strong>的机制对问题求解进行高效的迭代搜索。</p>
+<p>遗传算法的基本思想是将问题的解表示成一个个体，然后<strong>根据适应度函数的定义来评估</strong>每个个体的适应性并确定其在繁殖中的概率。经过<strong>交叉</strong>与<strong>变异</strong>等操作，<strong>新的代替原有的个体，继续与其他生成的个体竞争下去</strong>。这一过程不断迭代直至找到最优解或达到迭代次数上限。</p>
+<p>遗传算法通过对群体中个体进行<strong>复制</strong>、<strong>交叉</strong>、<strong>变异</strong>等操作对个体进行多样化的重新组合，经<strong>适应度函数</strong>的筛选（评价）保留适应度较高的个体继而组成新的群体，反复迭代，指导群体的个体适应度不断提高或满足迭代终止条件。在迭代的过程中，新群体继承了父代群体的优良特征、而且得到不断优化。</p>
+<p><strong>关键：复制、交叉、变异</strong></p>
+<p><strong>优点</strong>：多样性保持方面表现良好。</p>
+<p><strong>缺点</strong>：收敛速度慢，比其他算法需要更长的时间才能找到全局最优解。</p>
+</li>
+</ul>
+<h2 id="复制Reproduction"><a href="#复制Reproduction" class="headerlink" title="复制Reproduction"></a>复制Reproduction</h2><ul>
+<li>复制(<code>Reproduction</code>)：也被称为繁殖或再生，通常根据适应度函数(<code>Fitness Function</code>)计算结果，<strong>选择适应值较高的个体复制</strong>，因此有时也将初始化种群与复制过程一起叫做选择运算，而按照适应度函数计算值进行复制模仿了达尔文生物进化论“适者生存、优胜劣汰”的自然选择过程，其意义在于选择并继承了父（母）代优秀基因，繁殖优秀子孙的几率就更大。</li>
+<li>遗传算法的选择策略主要有：**轮盘赌策略(<code>roulette wheel selection</code>)**、锦标赛选择策略等。<ul>
+<li>轮盘赌基本思想：适应度越高的解，按道理越应该高概率地进行复制，且复制的份数应该越多。</li>
+</ul>
+</li>
+</ul>
+<h2 id="交叉Crossover"><a href="#交叉Crossover" class="headerlink" title="交叉Crossover"></a>交叉Crossover</h2><ul>
+<li>交叉(<code>Crossover</code>)：模拟生物进化过程的繁殖现象，通过两个染色体按照某种方式<strong>互相交换部分基因从而形成两个新的个体</strong>的过程。交叉的方式有单点交叉（One-point Crossover）、两点交叉&#x2F;多点交叉（Two-point&#x2F;Multi-point Crossover）、均匀交叉（Uniform Crossover，也称一致交叉）等。</li>
+</ul>
+<h2 id="变异Mutation"><a href="#变异Mutation" class="headerlink" title="变异Mutation"></a>变异Mutation</h2><ul>
+<li>变异(<code>Mutation</code>)：变异操作主要是为了避免陷入局部最优解的困境，通常按概率对少量个体进行变异操<br>作，对于群组中的每个个体生成 1 个 0<del>1 的随机数 $p_1$，假设预设变异概率为 $p_m$ (一般设置在 0.01</del>0.1 之间<br>)的情况下，如果$p_1$ &lt; $p_m$，则进行变异操作，否则不进行变异。</li>
+</ul>
+<h2 id="遗传算法中对种群操作"><a href="#遗传算法中对种群操作" class="headerlink" title="遗传算法中对种群操作"></a>遗传算法中对种群操作</h2><ul>
+<li>在遗传算法中，对种群的操作主要包括初始化和淘汰两类：<ol>
+<li>初始化（Initialization）：在遗传算法开始前，需要<strong>先生成一个初始的种群</strong>。一般来说，这个种群是由一些<strong>随机的个体组成的</strong>。随机程度要适当，不能过于杂乱，也不能过于单一。</li>
+<li>淘汰（Survival of the fittest）：在遗传算法的迭代过程中，需要通过一些策略对种群进行淘汰，以避免种群陷入局部最优解。常见的淘汰策略有精英保留、种群大小控制、截断选择等。<ul>
+<li>精英保留：将前几代中表现最好的个体直接留用到下一代种群中，以保持种群中的优秀个体，提升算法的搜索效率。</li>
+<li>种群大小控制：设定一个种群大小的上限，当种群中个体数目超过这个数值时，需要淘汰一部分个体，保持种群规模的合适。</li>
+<li>截断选择：按一定比例将个体按照适应度的大小从高到低排序，只保留前面的几个个体，淘汰后面的个体。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Meta-heuristic algorithm</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>PSO algorithm</title>
+    <url>/2023/05/22/PSO-algorithm/</url>
+    <content><![CDATA[<blockquote>
+<p><strong><code>Particle Swarm Optimization</code>（PSO）：粒子群优化算法。粒子群算法的基本思想是通过群体中个体之间的协作和信息共享来寻找最优解。</strong></p>
+</blockquote>
+<span id="more"></span>
+
+<h1 id="PSO-algorithm"><a href="#PSO-algorithm" class="headerlink" title="PSO algorithm"></a>PSO algorithm</h1><ul>
+<li><p><strong><code>Particle Swarm Optimization</code>（PSO）：粒子群优化算法</strong>。粒子群算法的基本思想是通过群体中个体之间的协作和信息共享来寻找最优解。</p>
+<ul>
+<li><p>设想这样一个场景：一群鸟在随机搜索食物，而在这个区域里只有一块食物。所有的鸟都不知道食物在哪里，但是他们知道当前的位置离食物还有多远。那么找到食物的最优策路是什么呢？最简单有效的就是<strong>搜寻目前离食物最近的鸟的周围区域</strong>。</p>
+<p>鸟群在整个搜寻的过程中，通过相互传递各自的信息，让其他的鸟知道自己的位置，通过这样的协作，来判断自己找到的是不是最优解，同时也将最优解的信息传递给整个鸟群，最终，整个鸟群都能聚集在食物的周围，即找到了最优解。</p>
+<p><code>PSO</code>中，<strong>每个优化问题的解</strong>都是搜索空间中的一只鸟。我们称之为<strong>“粒子”</strong>。所有的粒子都有一个由被优化的函数决定的适应值<code>(fitness value)</code>，每个粒子还有一个<strong>速度</strong>决定他们飞翔的方向和距离。然后粒子们就追随当前的最优粒子在解空间中搜索。</p>
+<p><code>PSO</code>初始化为一群随机粒子随机解，然后<strong>通过迭代找到最优解</strong>。在每一次迭代中，粒子通过跟踪两个“极值”来更新自己：第一个就是粒子本身所找到的最优解，这个解叫做个体极值 <code>pBest</code>；另一个极值是整个种群目前找到的最优解，这个极值是全局极值 <code>gBest</code>。另外也可以不用整个种群而只是用其中一部分作为粒子的邻居，那么在所有邻居中的极值就是局部极值。</p>
+</li>
+</ul>
+<p><strong>优点</strong>：很强的学习机制且收敛速度快，很容易实现，只需要很少的几个参数进行调优。</p>
+<p><strong>缺点</strong>：在演化过程中容易陷入局部最优解，缺乏局部搜索技术。</p>
+</li>
+<li><p>在云计算工作流调度的问题中，<strong>每个粒子就代表一个调度执行解</strong>，通过比较粒子和当前最优粒子的适应度函数的值，不断迭代，直到得到最优调度解。</p>
+<p>由于云计算环境中存在着多种类型的虚拟机资源，每种资源都有其特定的限制和使用成本模型。考虑到虚拟机的计算能力和使用成本等因素，云计算系统需要合理地分配虚拟机资源，以最大化资源利用率和系统效益。</p>
+</li>
+<li><p>使用<code>PSO</code>算法可以有效地优化虚拟机的调度策略。<code>PSO</code>算法可以在优化目标函数中设置多个参数以权衡资源利用率和系统效益。例如，在<strong>优化目标函数（适应度函数，fitness function）</strong>中，可以添加CPU利用率和内存利用率等参数，并在优化过程中动态调整各参数的权重以实现最优解的搜索。</p>
+</li>
+</ul>
+<h2 id="PSO-工作流程及算法实现"><a href="#PSO-工作流程及算法实现" class="headerlink" title="PSO 工作流程及算法实现"></a>PSO 工作流程及算法实现</h2><ul>
+<li><a href="https://blog.csdn.net/qq_44636569/article/details/130567836?spm=1001.2014.3001.5501">粒子群算法（PSO）工作流程及算法实现</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Meta-heuristic algorithm</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Multi-Swarm Co-Evolution Based Hybrid Intelligent Optimization for Bi-Objective Multi-Workflow Scheduling in the Cloud</title>
+    <url>/2023/05/22/Multi-Swarm-Co-Evolution-Based-Hybrid-Intelligent-Optimization-for-Bi-Objective-Multi-Workflow-Scheduling-in-the-Cloud/</url>
+    <content><![CDATA[<h2 id="Multi-Swarm-Co-Evolution-Based-Hybrid-Intelligent-Optimization-for-Bi-Objective-Multi-Workflow-Scheduling-in-the-Cloud"><a href="#Multi-Swarm-Co-Evolution-Based-Hybrid-Intelligent-Optimization-for-Bi-Objective-Multi-Workflow-Scheduling-in-the-Cloud" class="headerlink" title="Multi-Swarm Co-Evolution Based Hybrid Intelligent Optimization for Bi-Objective Multi-Workflow Scheduling in the Cloud"></a>Multi-Swarm Co-Evolution Based Hybrid Intelligent Optimization for Bi-Objective Multi-Workflow Scheduling in the Cloud</h2><ul>
+<li>在云环境下基于<strong>多群协同进化</strong>的双目标（执行时间和执行成本）多工作流调度的<strong>混合智能优化</strong><ul>
+<li>双目标：执行时间和执行成本</li>
+<li>多群协同进化：第一个种群关注执行时间最优化、第二个种群关注执行费用最优化、第三个种群关注两者之间的权衡最优化，这三个种群相互协作（协同进化）</li>
+<li>混合智能优化：结合 <code>PSO</code>、<code>GA</code>、<code>SA</code> 的优点，**<code>PSO</code> 加快了收敛效率<strong>，</strong><code>GA</code> 从 <code>PSO</code> 得到的非支配解中产生更多的可能为帕累托最优解的解<strong>；</strong><code>SA</code> 避免陷入局部最优**</li>
+</ul>
+</li>
+</ul>
+<h3 id="introduction"><a href="#introduction" class="headerlink" title="introduction"></a>introduction</h3><ul>
+<li><p>首先将工作流的任务调度在云服务器上时，要同时考虑执行时间和执行费用（双目标），这就涉及了<strong>多目标优化问题</strong>；除此之外，会有<strong>越来越多的用户（多用户）将其各种各样的工作流（多工作流）提交给云服务器</strong>进行处理，因此对云服务器的响应能力会有更高的需求。</p>
+<p>所以总的来说，这篇论文就是想要通过提出的调度优化策略（混合智能优化，所谓智能优化，就是基于元启发式算法的优化，包括<code>PSO</code>、<code>GA</code>、<code>ACO</code>、<code>SA</code>等，混合智能优化，就是将这些优化算法的优点结合起来），来对所提交的<strong>所有工作流进行合理的调度（多工作流调度问题）</strong>，能<strong>对所有工作流的执行时间和执行成本之间的权衡进行最优化</strong>，同时<strong>还能满足所有用户的服务质量要求（如时间期限、预算等）。</strong></p>
+</li>
+</ul>
+<h3 id="Experimental-Results-and-Analysis"><a href="#Experimental-Results-and-Analysis" class="headerlink" title="Experimental Results and Analysis"></a>Experimental Results and Analysis</h3><ul>
+<li><p>评价多目标优化问题中的解决方案的指标：<code>Hypervolume</code> 和 <code>C(A,B)</code></p>
+<ul>
+<li><code>Hypervolume</code>：通过计算 <code>PF</code> 中各解之间的封闭面积体积和一个通常选作最大目标值组合的参考点得到。<code>Hv</code> 的值越大，表明所得到的解越好。</li>
+<li><code>C(A,B)</code>：表示在 B 中，由 A 中的解决方案支配的解决方案在 B 中的比率。<code>C(A,B)</code> &#x3D; 0 表示在 B 中找不到被 A 中的解决方案支配的解决方案；<code>C(A,B)</code> &#x3D; 1 表示对于在 B 中找到的每一个解决方案，都能在 A 中至少找到一个解决方案支配或者等于它。</li>
+</ul>
+</li>
+<li><p>实验结论：</p>
+<ol>
+<li>与 <code>NSGA-Ⅱ</code> 和 <code>ECMSMOO</code> 相比，<code>MCHO</code> 在寻找非支配解上要明显优于它们，尽管在工作流规模较小时 <code>MOACS</code> 能和 <code>MCHO</code> 有相近的表现，但是随着工作流规模的增大，<code>MCHO</code> 的优势显得越来越明显。</li>
+<li>通过对 <code>Hv</code> 以及 <code>RIP</code> 的分析也可以得到上面 1 的结论，通过 <code>RIP</code> 来直观地感受 MCHO 相对于其他算法所提升的百分比。</li>
+<li>通过 <code>C(A,B)</code> 的值可以得到，由 <code>MCHO</code> 得到的解能很大程度上地支配由 <code>NSGA-Ⅱ</code> 和 <code>ECMSMOO</code> 得到的解，且在工作流规模较大的时候（D-16-100）， 由 <code>MCHO</code> 得到的解也能支配 <code>MOACS</code> 得到的解。</li>
+<li><code>MCHO</code> 的运行时间要优于 <code>MOACS</code>，但是要劣于 <code>NSGA-Ⅱ</code> 和 <code>ECMSMOO</code>。</li>
+</ol>
+<p><strong>总结：MCHO 不管是在最优化表现上还是在运行效率上，都要优于 MOACS；尽管 MCHO 需要比 NSGA-Ⅱ 和 ECMSMOO 更多的运行时间，但是它在最优化表现上要远远大于后两者</strong>。</p>
+</li>
+</ul>
+<h3 id="result-and-discussion"><a href="#result-and-discussion" class="headerlink" title="result and discussion"></a>result and discussion</h3><ul>
+<li><p>通过基于多群协同进化的混合智能优化，将各种优化算法的优点结合了起来，**<code>PSO</code>加快了收敛效率，<code>GA</code>使得能更近地接近帕累托前沿<code>PF</code>（对于多目标问题的非支配解的最优情况）；<code>SA</code>避免陷入局部最优**。</p>
+<p><code>MCHO</code>的实验效果优于<code>NSGA-Ⅱ</code>、<code>ECMSMOO</code>和<code>MOACS</code>。</p>
+</li>
+<li><p>未来考虑方向：进一步往三目标最优化问题考虑，除了考虑执行时间和执行成本，还考虑能源消耗。</p>
+</li>
+</ul>
+<h3 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h3><ul>
+<li><p>插入到种群中的预定义的解决方案从何而来？</p>
+</li>
+<li><p>三个种群之间的关系是什么？</p>
+<p><strong>第一个种群关注执行时间最优化、第二个种群关注执行费用最优化、第三个种群关注两者之间的权衡最优化</strong>，这三个种群相互协作（协同进化），共同构成全局非支配解空间。</p>
+</li>
+<li><p><code>elite enhancement strategy</code>是什么？</p>
+<p>对于<code>PSO</code>算法得到的具有 “elite knowledge” 的非支配解，通过 <code>GA</code> 产生更多的可能为帕累托最优解的解，即为精英增强策略。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Papers</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>论文阅读trick</title>
+    <url>/2023/05/22/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BBtrick/</url>
+    <content><![CDATA[<h1 id="论文阅读trick"><a href="#论文阅读trick" class="headerlink" title="论文阅读trick"></a>论文阅读trick</h1><ul>
+<li>在阅读论文并记录笔记时，可以按照以下的顺序来记录：<ul>
+<li>作者想研究什么？</li>
+<li>采用了什么方法或方案？</li>
+<li>最后得出了什么结论？</li>
+</ul>
+</li>
+<li>而在阅读论文时，可以按照这样的顺序阅读：<ul>
+<li>先看 <code>Introduction</code> 部分（知道作者要研究什么）；然后是 <code>Results and Discussion</code> 部分（这部分是作者缜密的论证过程）；而把实验方案部分放在最后，我之所以按照这样的顺序读，是想给自己更多思考和好奇。</li>
+<li>在了解作者想研究什么后，我就会先猜想需要些什么数据来证明它的想法，这其实也是对自己的思维训练，想好需要什么数据后，我会回到文献的结果讨论部分，看自己的思路和作者的讨论部分是否一致，如果一致我又会很好奇作者会采用什么方法来得到这些数据，这样就把好奇引导到具体实验方法上。</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Papers</category>
+      </categories>
   </entry>
   <entry>
     <title>走进消息队列</title>
