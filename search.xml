@@ -11,12 +11,12 @@
 <h1 id="博客指南"><a href="#博客指南" class="headerlink" title="博客指南"></a>博客指南</h1><ul>
 <li><p>Hello，这里是 Running Noob 的 blog，welcome！</p>
 </li>
-<li><p>在这里，主要记录了博主在学习成长过程中的各种笔记，包括所阅读的论文的总结和心得、本人研究方向的实验平台 <code>WorkflowSim</code> 的原理与使用方法、软件开发过程中的各种相关知识等等。</p>
+<li><p>在这里，主要记录了博主在学习成长过程中的各种笔记，包括博主所精读的一些论文的总结、博主研究方向的实验平台 <code>WorkflowSim</code> 的原理与使用方法、字节跳动训练营课程内容的总结、软件开发过程中的各种相关知识等等。</p>
 <p>总的来说，这里是包含博主各种笔记的藏经阁 ~~~ </p>
 </li>
-<li><p>同时，这里也记录并将记录我的各种项目经历与实习经历，可以说是个人成长的一个存档点吧，也希望能给未来想要进入互联网行业的同学一些参考价值 ~ 。</p>
+<li><p>同时，这里也记录并将记录我的各种项目经历与实习经历，可以说是博主个人成长的一个记录点，也希望能给未来想要进入互联网行业的同学一些参考价值 ~ 。</p>
 </li>
-<li><p>未来，博主也有可能在这里分享自己在工作过程中的心得与感悟，我想，于己于人，都是有益的吧。</p>
+<li><p>未来，博主也有可能在这里分享自己在工作过程中的各种心得与感悟，我想，于己于人，都是有益的吧。</p>
 </li>
 </ul>
 ]]></content>
@@ -55,6 +55,243 @@
 ]]></content>
       <categories>
         <category>为人处世</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>高质量编程与性能调优实践</title>
+    <url>/2023/05/29/%E9%AB%98%E8%B4%A8%E9%87%8F%E7%BC%96%E7%A8%8B%E4%B8%8E%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%AE%9E%E8%B7%B5/</url>
+    <content><![CDATA[<blockquote>
+<ul>
+<li><strong>代码编写的规范</strong></li>
+<li><strong>性能优化建议、性能分析工具 pprof、性能调优案例</strong></li>
+</ul>
+</blockquote>
+<span id="more"></span>
+
+<h1 id="高质量编程与性能调优实践"><a href="#高质量编程与性能调优实践" class="headerlink" title="高质量编程与性能调优实践"></a>高质量编程与性能调优实践</h1><h2 id="01-高质量编程"><a href="#01-高质量编程" class="headerlink" title="01 高质量编程"></a>01 高质量编程</h2><h3 id="1-1-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h3><ul>
+<li>什么是高质量编程？-&gt; 编写的代码能够达到<strong>正确可靠、简洁清晰</strong>的目标可称之为高质量代码。<ul>
+<li>各种边界条件是否考虑完备</li>
+<li>异常情况处理，稳定性保证</li>
+<li>易读易维护</li>
+</ul>
+</li>
+<li>编程原则：<ul>
+<li><strong>简单性</strong>：<ul>
+<li>消除“多余的复杂性”，以简单清晰的逻辑编写代码</li>
+<li>不理解的代码无法修复改进</li>
+</ul>
+</li>
+<li><strong>可读性</strong>：<ul>
+<li>代码是写给人看的，而不是机器</li>
+<li>编写可维护代码的第一步是确保代码可读</li>
+</ul>
+</li>
+<li><strong>生产力</strong>：<ul>
+<li>团队整体工作效率非常重要</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-编码规范"><a href="#1-2-编码规范" class="headerlink" title="1.2 编码规范"></a>1.2 编码规范</h3><ul>
+<li><p>编程规范是很重要的一部分，好的代码规范编写习惯可以提高个人工作的效率，甚至可以让人一眼看出正经科班和野路子的区别。</p>
+</li>
+<li><p>如何编写高质量的 Go 代码：</p>
+<ul>
+<li><p><strong>代码格式</strong>：推荐使用 <code>gofmt</code> 自动格式化代码。</p>
+<ul>
+<li><p><code>gofmt</code>：<code>Go</code> 语言官方提供的工具，能自动格式化 <code>Go</code> 语言代码为官方统一风格。</p>
+<p>常见 <code>IDE</code> 都支持方便的配置。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>注释</strong>：注释应该做的：</p>
+<ul>
+<li>注释应该<strong>解释代码作用</strong>。</li>
+<li>注释应该<strong>解释代码如何做的</strong>。</li>
+<li>注释应该解释代码实现的原因：<strong>提供额外的上下文</strong>。</li>
+<li>注释应该<strong>解释代码什么情况会出错</strong>。</li>
+</ul>
+</li>
+<li><p><strong>命名规范</strong>：</p>
+<ul>
+<li>简洁胜于冗长。</li>
+<li>缩略词全大写，但当其位于变量开头且不需要导出时，使用全小写：<ul>
+<li>例如使用 <code>ServerHTTP</code> 而不是 <code>ServerHttp</code></li>
+<li>使用 <code>XMLHTTPRequest</code> 或者 <code>xmlHTTPRequest</code></li>
+</ul>
+</li>
+<li><strong>变量名</strong>距离其被使用的地方越远，则需要携带越多的上下文信息。</li>
+<li><strong>函数名</strong>不携带包名的上下文信息，因为包名和函数名总是成对出现的。</li>
+<li><strong>包名</strong>只由小写字母组成，不包含大写字母和下划线等字符，且不要与标准库同名。</li>
+</ul>
+</li>
+<li><p><strong>控制流程</strong></p>
+<ul>
+<li>线性原理，处理逻辑尽量走直线，避免复杂的嵌套分支，保持正常流程清晰。</li>
+<li>尽量保持正常代码路径为最小缩进。<strong>优先处理错误情况&#x2F;特殊情况，尽早返回或继续循环来减少嵌套</strong>。</li>
+</ul>
+</li>
+<li><p><strong>错误和异常处理</strong></p>
+<ul>
+<li>简单错误（仅出现一次，且在其他地方不需要捕获的错误）优先使用 <code>errors.New</code> 来创建匿名变量来直接表示简单错误。</li>
+<li>判定一个错误是否为特定错误，可以使用 <code>errors.Is</code> 。</li>
+<li><code>defer</code> 语句会在函数返回前调用，多个 <code>defer</code> 语句是后进先出。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-3-性能优化建议"><a href="#1-3-性能优化建议" class="headerlink" title="1.3 性能优化建议"></a>1.3 性能优化建议</h3><ul>
+<li><p>性能优化的前提是满足正确可靠、简洁清晰等质量因素。</p>
+<p>性能优化是综合评估，有时候时间效率和空间效率可能对立。</p>
+</li>
+</ul>
+<h4 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h4><ul>
+<li><p><code>slice</code> 预分配内存：尽可能在使用 <code>make()</code> 初始化切片时提供容量信息。</p>
+<p>这样可以降低程序执行时间，减少内存分配次数。 -&gt; 为什么？</p>
+<ul>
+<li>我们要从 <code>slice</code> 的本质进行分析：<ul>
+<li>切片本质是一个数组片段的描述，包括：数组指针、片段的长度、片段的容量。</li>
+<li>切片操作并不复制切片指向的元素</li>
+<li>创建一个新的切片会复用原来切片的底层数组</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="map"><a href="#map" class="headerlink" title="map"></a>map</h4><ul>
+<li><code>map</code> 预分配内存：和 <code>slice</code> 类似。<ul>
+<li>不断向 <code>map</code> 中添加元素的操作会触发 <code>map</code> 的扩容</li>
+<li>提前分配好空间可以减少内存拷贝和 <code>Rehash</code> 的消耗</li>
+<li>建议根据实际需求提前预估好需要的空间</li>
+</ul>
+</li>
+</ul>
+<h4 id="strings-Builder"><a href="#strings-Builder" class="headerlink" title="strings.Builder"></a>strings.Builder</h4><ul>
+<li><p>在进行字符串的拼接时，使用 <code>+</code> 拼接性能最差，<code>strings.Builder</code>，<code>bytes.Buffer</code> 相近，<code>strings.Builder</code> 更快。</p>
+<p>原因在于：</p>
+<ul>
+<li>字符串在 <code>Go</code> 语言中是不可变类型，占用内存大小是固定的</li>
+<li>使用 <code>+</code> 每次都会重新分配内存</li>
+<li><code>strings.Builder</code>，<code>bytes.Buffer</code> 底层都是 <code>[]byte</code> 数组，根据其内存扩容策略，不需要每次拼接时重新分配内存。</li>
+</ul>
+</li>
+</ul>
+<h4 id="空结构体"><a href="#空结构体" class="headerlink" title="空结构体"></a>空结构体</h4><ul>
+<li>通过使用空结构体来节省内存：<ul>
+<li>空结构体 <code>struct&#123;&#125;</code> 实例不占据任何内存空间。因此可作为各种场景下的占位符使用。</li>
+</ul>
+</li>
+</ul>
+<h4 id="atomic包"><a href="#atomic包" class="headerlink" title="atomic包"></a>atomic包</h4><ul>
+<li>在多线程中，使用 <code>atomic</code> 包，相对于锁来说，性能更优。<ul>
+<li>锁的实现是通过操作系统来实现，属于系统调用</li>
+<li><code>atomic</code> 操作是通过硬件实现，效率比锁高</li>
+<li><code>sync.Mutex</code> 应该用来保护一段逻辑，不仅仅用于保护一个变量</li>
+<li>对于非数值操作，可以使用 <code>atomic.Value</code>，能承载一个 <code>interface&#123;&#125;</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="02-性能调优实战"><a href="#02-性能调优实战" class="headerlink" title="02 性能调优实战"></a>02 性能调优实战</h2><h3 id="2-1-简介"><a href="#2-1-简介" class="headerlink" title="2.1 简介"></a>2.1 简介</h3><ul>
+<li>性能调优原则：<ul>
+<li>要依靠数据不是猜测。</li>
+<li>要定位最大瓶颈而不是细枝末节。</li>
+<li>不要过早优化。</li>
+<li>不要过度优化。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-2-性能分析工具pprof"><a href="#2-2-性能分析工具pprof" class="headerlink" title="2.2 性能分析工具pprof"></a>2.2 性能分析工具pprof</h3><ul>
+<li><code>pprof</code> 是用于可视化和分析性能分析数据的工具。</li>
+</ul>
+<h4 id="2-2-1-功能图"><a href="#2-2-1-功能图" class="headerlink" title="2.2.1 功能图"></a>2.2.1 功能图</h4><p><img src="/../images/%E9%AB%98%E8%B4%A8%E9%87%8F%E7%BC%96%E7%A8%8B%E4%B8%8E%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%AE%9E%E8%B7%B5/pprof%E5%8A%9F%E8%83%BD%E7%AE%80%E4%BB%8B.jpg"></p>
+<h4 id="2-2-2-排查实战"><a href="#2-2-2-排查实战" class="headerlink" title="2.2.2 排查实战"></a>2.2.2 排查实战</h4><ul>
+<li><p>利用 <code>pprof</code> 进行性能优化的实战可以根据</p>
+<p><a href="https://github.com/wolfogre/go-pprof-practice">wolfogre&#x2F;go-pprof-practice</a>、<a href="https://blog.wolfogre.com/posts/go-ppof-practice/">golang pprof 实战 | Wolfogre’s Blog</a> </p>
+<p>来进行操作学习。</p>
+</li>
+</ul>
+<h4 id="2-2-3-采样过程和原理"><a href="#2-2-3-采样过程和原理" class="headerlink" title="2.2.3 采样过程和原理"></a>2.2.3 采样过程和原理</h4><h5 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h5><ul>
+<li>采样对象：函数调用和它们占用的时间。</li>
+<li>采样率：100次&#x2F;秒，固定值。</li>
+<li>采样时间：从手动启动到手动结束。</li>
+</ul>
+<h5 id="Heap-堆内存"><a href="#Heap-堆内存" class="headerlink" title="Heap-堆内存"></a>Heap-堆内存</h5><ul>
+<li>采样程序通过内存分配器在堆上分配和释放的内存，记录分配&#x2F;释放的大小和数量</li>
+<li>采样率：每分配 <code>512KB</code> 记录一次，可在运行开头修改，1 为每次分配均记录</li>
+<li>采样时间：从程序运行开始到采样时</li>
+<li>采样指标：<code>alloc.\_space</code>、<code>alloc_.objects</code>、<code>inuse_space</code>、<code>inuse_objects</code></li>
+<li>计算方式：<code>inuse = alloc - free</code></li>
+</ul>
+<h5 id="Goroutine-amp-ThreadCreate"><a href="#Goroutine-amp-ThreadCreate" class="headerlink" title="Goroutine&amp;ThreadCreate"></a>Goroutine&amp;ThreadCreate</h5><ul>
+<li><code>Goroutine</code>：记录所有用户发起且在运行中的 <code>goroutine</code> 。</li>
+<li><code>ThreadCreate</code>：记录程序创建的所有系统线程的信息。</li>
+</ul>
+<h5 id="Block-amp-Mutex"><a href="#Block-amp-Mutex" class="headerlink" title="Block&amp;Mutex"></a>Block&amp;Mutex</h5><ul>
+<li>阻塞<code>Block</code>：<ul>
+<li>采样阻塞操作的次数和耗时</li>
+<li>采样率：<strong>阻塞耗时超过阈值的才会被记录</strong>，1 为每次阻塞均记录</li>
+</ul>
+</li>
+<li>锁<code>Mutex</code>：<ul>
+<li>采样争抢锁的次数和耗时</li>
+<li>采样率：只记录固定比例的锁操作，1 为每次加锁均记录</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-3-性能调优案例"><a href="#2-3-性能调优案例" class="headerlink" title="2.3 性能调优案例"></a>2.3 性能调优案例</h3><h4 id="业务服务优化"><a href="#业务服务优化" class="headerlink" title="业务服务优化"></a>业务服务优化</h4><ul>
+<li><p>基本概念：</p>
+<ul>
+<li><strong>服务</strong>：能单独部署，承载一定功能的程序</li>
+<li><strong>依赖</strong>：<code>Service A</code> 的功能实现依赖 <code>Service B</code> 的响应结果，称为 <code>Service A</code> 依赖 <code>Service B</code> </li>
+<li><strong>调用链路</strong>：能支持一个接口请求的相关服务集合及其相互之间的依赖关系</li>
+<li><strong>基础库</strong>：公共的工具包、中间件</li>
+</ul>
+<p><img src="/../images/%E9%AB%98%E8%B4%A8%E9%87%8F%E7%BC%96%E7%A8%8B%E4%B8%8E%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%AE%9E%E8%B7%B5/%E4%B8%9A%E5%8A%A1%E6%9C%8D%E5%8A%A1%E4%BC%98%E5%8C%96.jpg"></p>
+</li>
+<li><p>流程：</p>
+<ul>
+<li>建立服务性能评估手段</li>
+<li>分析性能数据，<strong>定位性能瓶颈</strong><ul>
+<li>使用库不规范</li>
+<li>高并发场景优化不足</li>
+</ul>
+</li>
+<li>重点优化项改造<ul>
+<li>正确性是基础</li>
+</ul>
+</li>
+<li>优化效果验证：<ul>
+<li>重复压测验证</li>
+<li>上线评估优化效果</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="基础库优化"><a href="#基础库优化" class="headerlink" title="基础库优化"></a>基础库优化</h4><ul>
+<li>分析基础库核心逻辑和性能瓶颈<ul>
+<li>设计完善改造方案</li>
+<li>数据按需获取</li>
+<li>数据序列化协议优化</li>
+</ul>
+</li>
+<li>内部压测验证</li>
+<li>推广业务服务落地验证</li>
+</ul>
+<h4 id="Go语言优化"><a href="#Go语言优化" class="headerlink" title="Go语言优化"></a>Go语言优化</h4><ul>
+<li>编译器&amp;运行时优化：<ul>
+<li>优化内存分配策略</li>
+<li>优化代码编译流程，生成更高效的程序</li>
+<li>内部压测验证</li>
+<li>推业务服务落地验证</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>ByteDance-BackEnd-notebook</category>
       </categories>
   </entry>
   <entry>
